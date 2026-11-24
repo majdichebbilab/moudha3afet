@@ -1,0 +1,3498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#C8102E" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>مغامرة المضاعفات المشتركة | السنة السادسة نحو النموذجي</title>
+  <!-- Google Fonts: Cairo (Arabic) & Nunito (French/English) with graceful fallbacks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              crimson: '#C8102E',
+              crimsonDark: '#9F0D24',
+              navy: '#1B2A4A',
+              sky: '#0284C7',
+              cream: '#FFFDF9',
+              amber: '#F59E0B',
+              emerald: '#10B981',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --font-ar: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-latin: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --brand-crimson: #C8102E;
+      --brand-navy: #1B2A4A;
+      --brand-sky: #0284C7;
+      --brand-cream: #FFFDF9;
+    }
+
+    html, body {
+      max-width: 100%;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background-color: #FFFDF9;
+      color: #1B2A4A;
+      -webkit-tap-highlight-color: transparent;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    button, a, input, [role="button"] {
+      touch-action: manipulation;
+    }
+
+    html[lang="ar"] body {
+      font-family: var(--font-ar);
+    }
+
+    html[lang="fr"] body,
+    html[lang="en"] body {
+      font-family: var(--font-latin);
+    }
+
+    /* Smartboard / Big Screen Mode Scaling */
+    html.smartboard-mode {
+      font-size: 19px;
+    }
+    html.smartboard-mode .smartboard-hide {
+      display: none !important;
+    }
+    html.smartboard-mode .smartboard-container {
+      max-width: 1180px !important;
+    }
+    html.smartboard-mode button,
+    html.smartboard-mode input {
+      min-height: 54px;
+    }
+
+    /* Tactile 3D Button Styling */
+    .btn-tactile {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, background-color 0.15s ease;
+      user-select: none;
+      min-height: 48px;
+    }
+    .btn-tactile:active:not(:disabled) {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    /* Bilingual Math Bridge Tooltip in French */
+    .math-bridge {
+      position: relative;
+      display: inline-block;
+      border-bottom: 2px dotted #C8102E;
+      color: #1B2A4A;
+      font-weight: 800;
+      cursor: help;
+      padding: 0 2px;
+      border-radius: 4px;
+      background: rgba(200, 16, 46, 0.08);
+    }
+    .math-bridge .bridge-tip {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #1B2A4A;
+      color: #FFFFFF;
+      font-family: var(--font-ar);
+      direction: rtl;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+      box-shadow: 0 10px 20px -5px rgba(27, 42, 74, 0.35);
+      border: 1.5px solid #C8102E;
+      z-index: 60;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      pointer-events: none;
+    }
+    .math-bridge .bridge-tip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #C8102E transparent transparent transparent;
+    }
+    .math-bridge:hover .bridge-tip,
+    .math-bridge:focus .bridge-tip,
+    .math-bridge.active-tip .bridge-tip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Smooth Animations */
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(8px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop {
+      animation: popIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.35s ease-in-out;
+    }
+
+    /* Confetti Canvas Overlay */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* A4 Printable Worksheet Styles */
+    #print-worksheet {
+      display: none;
+    }
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm;
+      }
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      header,
+      main,
+      footer,
+      #confetti-canvas,
+      #toast-box,
+      #fb-webview-banner,
+      #logo-modal {
+        display: none !important;
+      }
+      #print-worksheet {
+        display: block !important;
+        width: 100%;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+      }
+      .print-avoid-break {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-b from-[#FFFDF9] via-rose-50/30 to-sky-50/40">
+  <!-- Confetti Layer -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Toast Notification (Replaces alert) -->
+  <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden transition-all duration-200 max-w-[92vw]">
+    <div id="toast-msg" class="bg-[#1B2A4A] text-white px-5 py-3 rounded-2xl shadow-xl font-bold text-sm sm:text-base flex items-center gap-2 border-2 border-[#C8102E] text-center"></div>
+  </div>
+
+  <!-- Dedicated A4 Printable Worksheet Container -->
+  <section id="print-worksheet" aria-hidden="true"></section>
+
+  <!-- Facebook In-App Browser Helper Banner (Visible when opened inside Facebook App WebView) -->
+  <div id="fb-webview-banner" class="hidden bg-[#1B2A4A] text-white text-xs sm:text-sm px-3 py-2 border-b border-[#C8102E]">
+    <div class="smartboard-container max-w-4xl mx-auto flex items-center justify-between gap-2">
+      <p id="fb-webview-text" class="font-bold leading-snug">
+        📱 أنت تتصفح اللعبة داخل تطبيق فيسبوك: لحفظ الشهادة بسهولة، اضغط مطوّلاً على صورة الشهادة في النهاية أو افتح الرابط في المتصفح (Chrome / Safari).
+      </p>
+      <button type="button" onclick="document.getElementById('fb-webview-banner').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white font-black text-xs flex-shrink-0">
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-b-2 border-[#C8102E]/20 shadow-sm">
+    <div class="smartboard-container max-w-4xl mx-auto px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <!-- Brand Emblem & App Title -->
+      <div class="flex items-center gap-2.5">
+        <a
+          href="https://www.facebook.com/profile.php?id=100063621936512"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="السنة السادسة نحو النموذجي - Facebook"
+          class="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#FFFDF9] p-0.5 border-2 border-[#C8102E] shadow-md flex-shrink-0 overflow-hidden hover:scale-105 transition-transform block"
+          id="header-logo-slot"
+        >
+          <!-- Official Logo injected via JS -->
+        </a>
+        <div class="leading-tight">
+          <div class="flex flex-wrap items-center gap-1.5">
+            <a
+              href="https://www.facebook.com/profile.php?id=100063621936512"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="header-badge-text"
+              class="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-rose-50 hover:bg-rose-100 text-[#C8102E] border border-[#C8102E]/30 transition-colors"
+            >
+              السنة السادسة نحو النموذجي ↗
+            </a>
+          </div>
+          <h1 id="header-app-title" class="text-sm sm:text-base font-black text-[#1B2A4A] mt-0.5">
+            مغامرة المضاعفات المشتركة
+          </h1>
+        </div>
+      </div>
+
+      <!-- Controls: Language Switcher + Smartboard Mode + Mute -->
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+        <div class="inline-flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200" role="group" aria-label="Language Switcher">
+          <button type="button" data-lang-btn="ar" onclick="app.setLang('ar')" class="lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-[#C8102E] text-white shadow-xs">العربية</button>
+          <button type="button" data-lang-btn="fr" onclick="app.setLang('fr')" class="lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all text-slate-600 hover:text-[#1B2A4A]">Français</button>
+          <button type="button" data-lang-btn="en" onclick="app.setLang('en')" class="lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all text-slate-600 hover:text-[#1B2A4A]">English</button>
+        </div>
+
+        <button
+          type="button"
+          id="btn-smartboard"
+          onclick="app.toggleSmartboard()"
+          class="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-[#1B2A4A] border border-[#C8102E]/25 font-extrabold text-xs flex items-center gap-1 transition-colors"
+          title="Smartboard / Big Screen Mode"
+        >
+          <span>🖥️</span>
+          <span id="smartboard-label" class="hidden sm:inline">وضع السبورة</span>
+        </button>
+
+        <button
+          type="button"
+          id="btn-mute"
+          onclick="app.toggleMute()"
+          aria-label="Toggle Sound"
+          class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-base transition-colors"
+        >
+          🔊
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dynamic Screen Container -->
+  <main id="app-root" class="smartboard-container max-w-4xl w-full mx-auto px-3 sm:px-5 py-4 sm:py-6 flex-1"></main>
+
+  <!-- Custom Logo Settings Modal (Owner/Admin PIN Protected) -->
+  <div id="logo-modal" class="fixed inset-0 z-50 hidden bg-[#1B2A4A]/65 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#FFFDF9] rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-[#C8102E] animate-pop max-h-[92dvh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-3">
+        <h3 id="modal-logo-title" class="text-lg font-black text-[#1B2A4A]">🔒 لوحة المالك — إدارة الشعار والحقوق</h3>
+        <button type="button" onclick="app.closeSettingsModal()" class="w-9 h-9 rounded-full bg-rose-50 hover:bg-rose-100 text-[#C8102E] flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <!-- Step A: Owner PIN Verification Gate -->
+      <div id="admin-pin-gate" class="space-y-3.5 py-2">
+        <p id="modal-pin-desc" class="text-xs sm:text-sm font-bold text-slate-700 leading-relaxed">
+          هذه اللوحة مخصّصة لمالك الصفحة فقط لحماية حقوق الشعار والتوقيع عند النشر على GitHub وفيسبوك. أدخل الرمز السرّي للمتابعة:
+        </p>
+        <div class="flex gap-2" dir="ltr">
+          <input
+            type="password"
+            id="admin-pin-input"
+            inputmode="numeric"
+            maxlength="8"
+            placeholder="••••"
+            onkeydown="if (event.key === 'Enter') app.verifyAdminPin();"
+            class="flex-1 px-4 py-2.5 rounded-xl border-2 border-slate-300 focus:border-[#C8102E] focus:outline-none font-black text-center text-lg tracking-widest"
+          />
+          <button
+            type="button"
+            onclick="app.verifyAdminPin()"
+            id="modal-pin-unlock-btn"
+            class="px-5 py-2.5 rounded-xl bg-[#C8102E] hover:bg-[#9F0D24] text-white font-black text-sm shadow-sm"
+          >
+            فتح القفل 🔓
+          </button>
+        </div>
+        <p class="text-[11px] font-bold text-slate-500">
+          💡 للنشر الدائم على GitHub: ضع ملف صورتك باسم <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[#C8102E]">logo.png</code> بجانب <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[#1B2A4A]">index.html</code> وسيظهر تلقائياً لجميع التلاميذ.
+        </p>
+      </div>
+
+      <!-- Step B: Unlocked Owner Controls -->
+      <div id="admin-unlocked-panel" class="hidden space-y-3.5">
+        <!-- Live Logo Preview -->
+        <div class="flex flex-col items-center mb-2">
+          <div id="modal-logo-preview" class="w-24 h-24 rounded-full p-0.5 bg-[#FFFDF9] border-4 border-[#C8102E] shadow-md overflow-hidden"></div>
+        </div>
+
+        <!-- Drag & Drop / Paste / File Zone -->
+        <div>
+          <label id="modal-upload-label" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1.5">اختر ملفاً، اسحبه هنا، أو الصق صورة (Ctrl+V):</label>
+          <div
+            id="logo-dropzone"
+            ondragover="event.preventDefault(); this.classList.add('bg-rose-100', 'border-[#C8102E]');"
+            ondragleave="this.classList.remove('bg-rose-100', 'border-[#C8102E]');"
+            ondrop="app.handleLogoDrop(event)"
+            class="relative rounded-2xl border-2 border-dashed border-[#C8102E]/60 bg-rose-50/50 hover:bg-rose-50 p-3.5 text-center transition-colors"
+          >
+            <label for="logoFileInput" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#C8102E] hover:bg-[#9F0D24] text-white font-black text-xs sm:text-sm shadow-sm cursor-pointer">
+              <span>📁</span>
+              <span id="modal-pick-file-btn">اختيار صورة من الجهاز</span>
+            </label>
+            <input
+              type="file"
+              id="logoFileInput"
+              accept="image/*"
+              onchange="app.handleCustomLogoUpload(event)"
+              class="sr-only"
+            />
+            <p id="modal-drop-hint" class="text-[11px] font-bold text-slate-600 mt-2">
+              أو اسحب الصورة وأفلتها هنا • أو اضغط <kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-[10px]">Ctrl+V</kbd> للصق صورة من الحافظة
+            </p>
+          </div>
+        </div>
+
+        <!-- Paste Image URL Option -->
+        <div>
+          <label id="modal-url-label" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">أو الصق رابط صورة الشعار (URL):</label>
+          <div class="flex gap-2" dir="ltr">
+            <input
+              type="url"
+              id="logo-url-input"
+              placeholder="./logo.png"
+              class="flex-1 px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-bold text-xs sm:text-sm"
+            />
+            <button
+              type="button"
+              onclick="app.applyLogoFromUrl()"
+              id="modal-url-apply-btn"
+              class="px-3.5 py-2 rounded-xl bg-[#0284C7] hover:bg-sky-600 text-white font-black text-xs sm:text-sm whitespace-nowrap"
+            >
+              تطبيق
+            </button>
+          </div>
+        </div>
+
+        <!-- Teacher Signature Input -->
+        <div>
+          <label id="modal-teacher-label" class="block text-xs sm:text-sm font-bold text-slate-700 mb-1">توقيع المعلّم / المدرسة على الشهادة:</label>
+          <input type="text" id="teacher-signature-input" class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-bold text-xs sm:text-sm" />
+        </div>
+
+        <!-- Export Portable Base64 Snippet for GitHub -->
+        <div class="p-3 rounded-2xl bg-slate-100 border border-slate-300 space-y-1.5">
+          <div class="text-[11px] font-black text-[#1B2A4A]">📦 للتثبيت الدائم في مستودع GitHub (حتى لا يتغيّر عند أيّ زائر):</div>
+          <button
+            type="button"
+            onclick="app.copyGitHubLogoConstant()"
+            class="w-full py-2 px-3 rounded-xl bg-[#1B2A4A] hover:bg-slate-800 text-white font-black text-xs"
+          >
+            📋 نسخ كود الشعار المدمج (OFFICIAL_REPO_LOGO)
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 pt-1">
+          <button type="button" onclick="app.resetCustomLogo()" id="modal-reset-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm">
+            إعادة الشعار الافتراضي
+          </button>
+          <button type="button" onclick="app.saveSettingsModal()" id="modal-save-btn" class="px-5 py-2.5 rounded-xl bg-[#1B2A4A] hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md">
+            حفظ وإغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="smartboard-hide py-5 px-3 text-center text-xs text-slate-700 border-t border-[#C8102E]/15 bg-[#FFFDF9] mt-auto">
+    <div class="max-w-4xl mx-auto flex flex-col items-center gap-2">
+      <div class="flex items-center justify-center gap-2.5">
+        <div
+          id="footer-logo-slot"
+          ondblclick="app.openSettingsModal()"
+          title="© السنة السادسة نحو النموذجي"
+          class="w-8 h-8 rounded-full border border-[#C8102E] overflow-hidden flex-shrink-0 cursor-default"
+        ></div>
+        <p id="footer-text" class="font-extrabold text-[#1B2A4A]">
+          السنة السادسة نحو النموذجي • الأستاذ مجدي الشابي
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        <a
+          href="https://www.facebook.com/profile.php?id=100063621936512"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="footer-fb-link"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] font-black text-xs transition-colors"
+        >
+          <span>📘</span>
+          <span id="footer-fb-label">تابع صفحتنا الرسمية على فيسبوك: السنة السادسة نحو النموذجي</span>
+        </a>
+        <button
+          type="button"
+          onclick="app.openSettingsModal()"
+          aria-label="Owner Lock"
+          title="Owner Admin"
+          class="px-2 py-1 rounded-full text-slate-400 hover:text-[#C8102E] text-[11px] font-bold transition-colors"
+        >
+          🔒
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /**
+     * ============================================================================
+     * 3. OFFICIAL PAGE LOGO & OWNER-LOCKED BRAND PROTECTION
+     * ============================================================================
+     * GitHub Deployment Tip:
+     * 1) Place your official logo image as "./logo.png" in the same folder as index.html, OR
+     * 2) Paste its Data URL into OFFICIAL_REPO_LOGO below so every visitor on GitHub/FB
+     *    sees your locked official logo and cannot alter it.
+     */
+    const OWNER_ADMIN_PIN = '2026';
+    const OFFICIAL_REPO_LOGO = ''; // Optional: Paste Data URL here for permanent GitHub lock
+    const REPO_LOGO_FILES = ['./logo.png', './logo.jpg', './logo.webp'];
+    const CUSTOM_LOGO_STORAGE_KEY = 'sma_owner_logo_v1';
+    const TEACHER_SIG_STORAGE_KEY = 'sma_owner_sig_v1';
+    const FB_PAGE_URL = 'https://www.facebook.com/profile.php?id=100063621936512';
+    const FB_PAGE_SHORT_URL = 'facebook.com/profile.php?id=100063621936512';
+
+    function triggerHaptic(pattern = 15) {
+      try {
+        if (navigator.vibrate) navigator.vibrate(pattern);
+      } catch (e) {}
+    }
+
+    /**
+     * Rich embedded vector illustration matching the official Facebook page logo:
+     * Crimson border, blue sky with atom & DNA motifs, Tunisian flag on the left,
+     * microscope & flasks on the right, smiling Tunisian teacher in white lab coat &
+     * safety glasses, and the bottom ribbon "السنة السادسة" flanked by Tunisian emblems.
+     */
+    function getDefaultCrestSVG(sizeClass = 'w-full h-full') {
+      return `
+        <svg viewBox="0 0 240 240" class="${sizeClass}" xmlns="http://www.w3.org/2000/svg" aria-label="السنة السادسة نحو النموذجي">
+          <defs>
+            <linearGradient id="crestSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0284C7"/>
+              <stop offset="68%" stop-color="#38BDF8"/>
+              <stop offset="100%" stop-color="#BAE6FD"/>
+            </linearGradient>
+            <clipPath id="innerCrestClip">
+              <circle cx="120" cy="116" r="102"/>
+            </clipPath>
+          </defs>
+
+          <!-- Outer Cream & Crimson Ring -->
+          <circle cx="120" cy="120" r="116" fill="#FFFDF9" stroke="#C8102E" stroke-width="8"/>
+
+          <g clip-path="url(#innerCrestClip)">
+            <!-- Sky Background -->
+            <rect x="14" y="10" width="212" height="212" fill="url(#crestSky)"/>
+
+            <!-- Lab Desk Surface -->
+            <rect x="14" y="156" width="212" height="66" fill="#B47B44"/>
+            <line x1="14" y1="156" x2="226" y2="156" stroke="#78350F" stroke-width="2.5"/>
+
+            <!-- Atom Graphic (Top Right Sky) -->
+            <g transform="translate(174, 54)" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.92">
+              <ellipse rx="22" ry="8" transform="rotate(30)"/>
+              <ellipse rx="22" ry="8" transform="rotate(-30)"/>
+              <ellipse rx="22" ry="8" transform="rotate(90)"/>
+              <circle r="4.5" fill="#C8102E" stroke="none"/>
+              <circle cx="18" cy="4" r="2.2" fill="#C8102E" stroke="none"/>
+              <circle cx="-14" cy="-10" r="2.2" fill="#C8102E" stroke="none"/>
+            </g>
+
+            <!-- DNA Helix (Right Sky) -->
+            <g transform="translate(194, 96) rotate(22)" stroke="#E0F2FE" stroke-width="1.8" fill="none" opacity="0.8">
+              <path d="M-6,-18 Q6,-9 -6,0 Q6,9 -6,18"/>
+              <path d="M6,-18 Q-6,-9 6,0 Q-6,9 6,18"/>
+              <line x1="-4" y1="-12" x2="4" y2="-12"/>
+              <line x1="-4" y1="0" x2="4" y2="0"/>
+              <line x1="-4" y1="12" x2="4" y2="12"/>
+            </g>
+
+            <!-- Tunisian Flag on Left -->
+            <g transform="translate(22, 62)">
+              <rect x="2" y="-6" width="3.5" height="106" rx="1.5" fill="#78350F"/>
+              <circle cx="3.7" cy="-8" r="3.5" fill="#F59E0B"/>
+              <path d="M5.5,0 Q26,-6 44,4 L44,54 Q26,44 5.5,50 Z" fill="#C8102E"/>
+              <circle cx="25" cy="25" r="11.5" fill="#FFFFFF"/>
+              <path d="M27.5,18.5 A7,7 0 1,0 27.5,31.5 A5.5,5.5 0 1,1 27.5,18.5 Z" fill="#C8102E"/>
+              <polygon points="28.5,22.2 29.8,24.3 32.3,24.3 30.3,25.8 31,28.1 29,26.7 27,28.1 27.7,25.8 25.7,24.3 28.2,24.3" fill="#C8102E"/>
+            </g>
+
+            <!-- Microscope & Chemistry Flasks on Right Desk -->
+            <g transform="translate(166, 108)">
+              <!-- Microscope -->
+              <rect x="12" y="44" width="24" height="5" rx="2" fill="#1E293B"/>
+              <path d="M26,44 C34,36 34,20 24,14" stroke="#E2E8F0" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <rect x="16" y="8" width="7" height="20" rx="2" transform="rotate(-24 19 18)" fill="#F8FAFC" stroke="#334155" stroke-width="1.5"/>
+              <rect x="10" y="33" width="16" height="3" fill="#0F172A"/>
+              <!-- Green Flask -->
+              <path d="M36,34 L41,34 L46,49 L31,49 Z" fill="#22C55E" opacity="0.88"/>
+              <path d="M36,27 L41,27 L41,34 L46,49 L31,49 L36,34 Z" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+              <!-- Blue Flask -->
+              <path d="M21,37 L27,37 L33,52 L15,52 Z" fill="#1D4ED8" opacity="0.92"/>
+              <path d="M21,29 L27,29 L27,37 L33,52 L15,52 L21,37 Z" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+            </g>
+
+            <!-- Smiling Tunisian Teacher Portrait -->
+            <g transform="translate(104, 114)">
+              <!-- White Lab Coat & Shoulders -->
+              <path d="M-54,66 C-52,24 -28,12 0,12 C28,12 52,24 54,66 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+              <!-- Light Blue Shirt Collar -->
+              <polygon points="-14,12 0,34 14,12" fill="#93C5FD"/>
+              <!-- Deep Navy Tie -->
+              <polygon points="-4,18 4,18 6,48 0,56 -6,48" fill="#1B2A4A"/>
+              <!-- Lab Coat Lapels -->
+              <path d="M-15,12 L-24,44 L-6,46 L-10,16 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+              <path d="M15,12 L24,44 L6,46 L10,16 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+              <!-- Neck -->
+              <rect x="-9" y="-2" width="18" height="18" rx="6" fill="#E5A983"/>
+              <!-- Head -->
+              <ellipse cx="0" cy="-24" rx="22" ry="26" fill="#F1BA96"/>
+              <!-- Neat Dark Hair & Beard -->
+              <path d="M-22,-26 C-24,-52 24,-52 22,-26 C20,-38 -20,-38 -22,-26 Z" fill="#1E1B18"/>
+              <path d="M-20,-22 C-20,-4 -10,3 0,3 C10,3 20,-4 20,-22 C18,-10 10,-5 0,-5 C-10,-5 -18,-10 -20,-22 Z" fill="#1E1B18" opacity="0.82"/>
+              <!-- Eyebrows & Friendly Eyes -->
+              <path d="M-13,-31 Q-8,-34 -3,-31" stroke="#1E1B18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+              <path d="M3,-31 Q8,-34 13,-31" stroke="#1E1B18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+              <circle cx="-8" cy="-25" r="2.3" fill="#1E1B18"/>
+              <circle cx="8" cy="-25" r="2.3" fill="#1E1B18"/>
+              <!-- Safety Glasses -->
+              <rect x="-18" y="-30" width="15" height="10" rx="3" fill="#FFFFFF" fill-opacity="0.28" stroke="#E2E8F0" stroke-width="1.8"/>
+              <rect x="3" y="-30" width="15" height="10" rx="3" fill="#FFFFFF" fill-opacity="0.28" stroke="#E2E8F0" stroke-width="1.8"/>
+              <line x1="-3" y1="-26" x2="3" y2="-26" stroke="#E2E8F0" stroke-width="1.8"/>
+              <!-- Warm Smile -->
+              <path d="M-8,-12 Q0,-5 8,-12 Z" fill="#FFFFFF"/>
+              <path d="M-8,-12 Q0,-5 8,-12" stroke="#9F1239" stroke-width="1.5" fill="none"/>
+            </g>
+          </g>
+
+          <!-- Bottom Crimson & Cream Ribbon Banner ("السنة السادسة") -->
+          <g transform="translate(120, 194)">
+            <path d="M-92,-16 Q0,-26 92,-16 L84,18 Q0,34 -84,18 Z" fill="#C8102E"/>
+            <path d="M-86,-13 Q0,-22 86,-13 L79,13 Q0,26 -79,13 Z" fill="#FFFDF9"/>
+
+            <!-- Left Tunisian Flag Medallion -->
+            <circle cx="-67" cy="-1" r="14" fill="#C8102E" stroke="#FFFDF9" stroke-width="2"/>
+            <circle cx="-67" cy="-1" r="9.5" fill="#FFFFFF"/>
+            <path d="M-65,-6 A5.5,5.5 0 1,0 -65,4 A4.2,4.2 0 1,1 -65,-6 Z" fill="#C8102E"/>
+            <polygon points="-64,-3.2 -63,-1.5 -61,-1.5 -62.6,-0.3 -62,1.5 -63.6,0.4 -65.2,1.5 -64.6,-0.3 -66.2,-1.5 -64.2,-1.5" fill="#C8102E"/>
+
+            <!-- Right Tunisian Flag Medallion -->
+            <circle cx="67" cy="-1" r="14" fill="#C8102E" stroke="#FFFDF9" stroke-width="2"/>
+            <circle cx="67" cy="-1" r="9.5" fill="#FFFFFF"/>
+            <path d="M69,-6 A5.5,5.5 0 1,0 69,4 A4.2,4.2 0 1,1 69,-6 Z" fill="#C8102E"/>
+            <polygon points="70,-3.2 71,-1.5 73,-1.5 71.4,-0.3 72,1.5 70.4,0.4 68.8,1.5 69.4,-0.3 67.8,-1.5 69.8,-1.5" fill="#C8102E"/>
+
+            <!-- Arabic Banner Title -->
+            <text x="0" y="6" text-anchor="middle" fill="#C8102E" font-family="Cairo, sans-serif" font-weight="900" font-size="18.5">السنة السادسة</text>
+
+            <!-- Bottom Center Red Star -->
+            <polygon points="0,20 2.6,25.5 8.6,26.2 4.2,30.2 5.4,36 0,33 -5.4,36 -4.2,30.2 -8.6,26.2 -2.6,25.5" fill="#C8102E"/>
+          </g>
+        </svg>
+      `;
+    }
+
+    function getDefaultCrestDataUrl() {
+      const svg = getDefaultCrestSVG('w-full h-full').trim();
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    /**
+     * ============================================================================
+     * 4. WEB AUDIO API SYNTHESIZER & CONFETTI ENGINE
+     * ============================================================================
+     */
+    const SoundFX = {
+      ctx: null,
+      muted: false,
+      ensureContext() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      playTone(freq, type = 'sine', duration = 0.14, delay = 0, gainVal = 0.14) {
+        if (this.muted) return;
+        try {
+          this.ensureContext();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime + delay;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(gainVal, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.02);
+        } catch (e) {}
+      },
+      pop() {
+        this.playTone(540, 'triangle', 0.08, 0, 0.1);
+      },
+      correct() {
+        this.playTone(523.25, 'triangle', 0.14, 0, 0.15);
+        this.playTone(659.25, 'triangle', 0.14, 0.09, 0.15);
+        this.playTone(783.99, 'triangle', 0.24, 0.18, 0.16);
+      },
+      wrong() {
+        this.playTone(230, 'sawtooth', 0.18, 0, 0.12);
+        this.playTone(185, 'sawtooth', 0.24, 0.14, 0.12);
+      },
+      levelUp() {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+          this.playTone(f, 'triangle', 0.22, idx * 0.09, 0.16);
+        });
+      }
+    };
+
+    function launchConfetti(count = 45) {
+      const canvas = document.getElementById('confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#C8102E', '#1B2A4A', '#0284C7', '#F59E0B', '#10B981'];
+      const particles = Array.from({ length: count }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 140,
+        r: 5 + Math.random() * 6,
+        dx: (Math.random() - 0.5) * 5,
+        dy: 3 + Math.random() * 5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        tilt: Math.random() * Math.PI
+      }));
+
+      let frames = 0;
+      function draw() {
+        frames++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.x += p.dx;
+          p.y += p.dy;
+          p.tilt += 0.1;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.tilt);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.65);
+          ctx.restore();
+        });
+        if (frames < 95) {
+          requestAnimationFrame(draw);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    /**
+     * ============================================================================
+     * 5. MATH UTILITIES, SEEDED RNG & BILINGUAL MATH BRIDGE
+     * ============================================================================
+     */
+    function gcd(a, b) {
+      let x = Math.abs(a);
+      let y = Math.abs(b);
+      while (y) {
+        const t = y;
+        y = x % y;
+        x = t;
+      }
+      return x || 1;
+    }
+
+    function lcm(a, b) {
+      if (!a || !b) return 0;
+      return Math.abs(a * b) / gcd(a, b);
+    }
+
+    function lcm3(a, b, c) {
+      return lcm(lcm(a, b), c);
+    }
+
+    function getMultiplesInRange(step, minR, maxR, includeZero = false) {
+      const res = [];
+      if (includeZero && minR === 0) res.push(0);
+      const start = Math.max(step, Math.ceil(minR / step) * step);
+      for (let m = start; m <= maxR; m += step) {
+        if (!res.includes(m)) res.push(m);
+      }
+      return res;
+    }
+
+    function createSeededRng(seedStr) {
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < seedStr.length; i++) {
+        h ^= seedStr.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return function () {
+        h += 0x6d2b79f5;
+        let t = Math.imul(h ^ (h >>> 15), 1 | h);
+        t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function applyMathBridge(text, lang) {
+      if (lang !== 'fr' || typeof text !== 'string') return text;
+      const rules = [
+        { regex: /\b(PPCM)\b/g, ar: 'أصغر مضاعف مشترك مخالف للصفر' },
+        { regex: /\b(multiples? communs?)\b/gi, ar: 'مضاعف مشترك' },
+        { regex: /\b(multiples?)\b/gi, ar: 'مضاعف' },
+        { regex: /\b(divisibles?|diviseurs?)\b/gi, ar: 'قابل للقسمة / قاسم' }
+      ];
+      let out = text;
+      rules.forEach((r) => {
+        out = out.replace(
+          r.regex,
+          (match) =>
+            `<span class="math-bridge" tabindex="0" onclick="this.classList.toggle('active-tip')">${match}<span class="bridge-tip">${r.ar}</span></span>`
+        );
+      });
+      return out;
+    }
+
+    /**
+     * ============================================================================
+     * 6. FULL LOCALIZATION DICTIONARY (AR / FR / EN)
+     * ============================================================================
+     */
+    const I18N = {
+      ar: {
+        badge: 'السنة السادسة نحو النموذجي ↗',
+        appTitle: 'مغامرة المضاعفات المشتركة',
+        smartboard: 'وضع السبورة',
+        fbBanner: '📱 أنت تتصفح اللعبة داخل تطبيق فيسبوك: لحفظ الشهادة بسهولة، اضغط مطوّلاً على صورة الشهادة في النهاية أو افتح الرابط في المتصفح (Chrome / Safari).',
+        heroTitle: 'مغامرة المضاعفات المشتركة',
+        heroSubtitle: 'تدرّب بذكاء على المضاعفات المشتركة وأصغر مضاعف مشترك مخالف للصفر استعداداً لمناظرة الدخول إلى الإعداديات النموذجية!',
+        followFbBtn: '📘 تابع صفحتنا على فيسبوك',
+        customizeLogo: 'تغيير الشعار',
+        resetLogoShort: 'إعادة الشعار الافتراضي',
+        tapLogoHint: 'اضغط لتغيير الشعار (ملف، لصق صورة، أو رابط)',
+        studentNameLabel: 'اسم التلميذ(ة) (يُطبع على الشهادة):',
+        studentNamePlaceholder: 'اكتب اسمك الكامل هنا...',
+        chooseMode: '1. اختر وضع اللعب:',
+        modes: {
+          learn: { title: 'وضع التعلّم', desc: 'بدون توقيت • تلميحات خطوة بخطوة للمراجعة' },
+          challenge: { title: 'وضع التحدّي', desc: 'عدّاد زمني • مضاعف النقاط • 3 قلوب ❤️❤️❤️' },
+          team: { title: 'تحدّي الفريقين', desc: 'منافسة تفاعلية في القسم: الفريق أ ضدّ الفريق ب' },
+          daily: { title: 'تحدّي اليوم', desc: '5 أسئلة موحّدة بتاريخ اليوم لمقارنة النتائج في التعليقات' }
+        },
+        chooseLevel: '2. ابدأ المغامرة أو اختر مستوى محدّداً:',
+        startAllBtn: 'ابدأ المغامرة الكاملة (المستويات 1 ← 4)',
+        levels: [
+          { id: 1, name: 'المستوى 1: صائد المضاعفات والحصر' },
+          { id: 2, name: 'المستوى 2: لوحة التقاطع والمسودة الذكية' },
+          { id: 3, name: 'المستوى 3: تحدّي الوضعيات والتعليل' },
+          { id: 4, name: 'المستوى 4: تحدّي النموذجي (3 أعداد)' }
+        ],
+        teamA: 'الفريق أ',
+        teamB: 'الفريق ب',
+        turnOf: 'دور:',
+        scoreLabel: 'النقاط:',
+        qProgress: 'السؤال',
+        divHintBtn: '💡 قاعدة قابلية القسمة',
+        stepHintBtn: '🧭 تلميح خطوة بخطوة',
+        submitBtn: 'تأكيد الإجابة ✓',
+        nextBtn: 'السؤال التالي ⬅',
+        finishBtn: 'عرض النتيجة والشهادة 🏆',
+        homeBtn: 'الرئيسية',
+        correctFeedback: 'أحسنت! إجابة صحيحة وموفّقة.',
+        wrongFeedback: 'إجابة غير موفّقة — راجع الشرح أسفله:',
+        timeUpFeedback: 'انتهى الوقت! راجع الحلّ الصحيح:',
+        boardTitle: 'لوحة التقاطع التفاعلية:',
+        toggleA: 'مضاعفات',
+        toggleB: 'مضاعفات',
+        commonLegend: 'مشتركة (أخضر)',
+        scratchTitle: 'المسودة الذكية (العدّ القفزي):',
+        endScreen: {
+          title: 'نتيجة المغامرة والشهادة',
+          certTitle: 'شهادة بطل المضاعفات',
+          certSubtitle: 'تُمنح هذه الشهادة تقديراً للتفوّق في الرياضيات — السنة السادسة أساسي',
+          defaultStudent: 'تلميذ(ة) متميّز(ة)',
+          modeLabel: 'الوضع:',
+          scoreLabel: 'النتيجة:',
+          accuracyLabel: 'الدقّة:',
+          dateLabel: 'التاريخ:',
+          downloadPng: '📥 حفظ الشهادة كصورة (PNG)',
+          copyFb: '📋 نسخ نص المشاركة للفيسبوك',
+          openFbPage: '📘 افتح صفحة الفيسبوك للتعليق بالشهادة',
+          playAgain: '🔄 العب مجدّداً بأسئلة جديدة',
+          longPressHint: '💡 على الهاتف: يمكنك أيضاً الضغط مطوّلاً على صورة الشهادة لحفظها في المعرض.',
+          mistakeTitle: 'مراجعة الأخطاء والحلول المفصّلة',
+          noMistakes: '🌟 مذهل! لم ترتكب أيّ خطأ في هذه الجولة!',
+          yourAns: 'إجابتك:',
+          correctAns: 'الإجابة الصحيحة:',
+          explanation: 'التعليل:'
+        },
+        modal: {
+          title: 'تحديث الشعار وتوقيع المعلّم',
+          uploadLabel: 'اختر ملفاً، اسحبه هنا، أو الصق صورة (Ctrl+V):',
+          pickFileBtn: 'اختيار صورة من الجهاز',
+          dropHint: 'أو اسحب الصورة وأفلتها هنا • أو اضغط Ctrl+V للصق صورة من الحافظة',
+          urlLabel: 'أو الصق رابط صورة الشعار (URL):',
+          urlApplyBtn: 'تطبيق',
+          teacherLabel: 'توقيع المعلّم / المدرسة على الشهادة:',
+          resetBtn: 'إعادة الشعار الافتراضي',
+          saveBtn: 'حفظ وإغلاق'
+        },
+        footer: 'السنة السادسة نحو النموذجي • الأستاذ مجدي الشابي',
+        footerFb: 'تابع صفحتنا الرسمية على فيسبوك: السنة السادسة نحو النموذجي',
+        toastCopied: 'تمّ نسخ نص المشاركة! افتح صفحة الفيسبوك والصق النتيجة مع صورتك في التعليقات.',
+        toastLogoUpdated: 'تم تحديث الشعار بنجاح! / Logo mis à jour !',
+        toastLogoReset: 'تمت إعادة الشعار الافتراضي بنجاح!',
+        toastUrlError: 'تعذّر تحميل الصورة من هذا الرابط، جرّب لصق الصورة مباشرة (Ctrl+V) أو اختيار ملف.',
+        toastSelectOne: 'اختر عدداً واحداً على الأقل قبل التأكيد!',
+        ppcmLadder: {
+          toggleBtn: '⚡ طريقة البحث السريع عن (أ.م.م)',
+          subtitle: 'نختبر مضاعفات العدد الأكبر ({max}) بالتتالي حتّى نجد أوّل عدد يقبل القسمة على البقيّة:',
+          stepRow: '{max} × {k} = {val}',
+          divYes: 'يقبل القسمة على {d} ✅',
+          divNo: 'لا يقبل على {d} ❌',
+          foundBadge: '🎯 وجدناه! أ.م.م = {lcm}'
+        },
+        nearMiss: {
+          pickedZero: 'تنبيه ذكي: العدد 0 هو فعلاً مضاعف مشترك لكلّ الأعداد، لكنّ السؤال اشترط «مخالفاً للصفر»! نبحث عن أوّل مضاعف مشترك أكبر من 0.',
+          pickedDivisor: 'تنبيه ذكي: العدد {val} هو «قاسم مشترك» (أصغر من أو يساوي الأعداد)، أمّا «المضاعف المشترك» فيكون أكبر من أو يساوي أكبر الأعداد!',
+          forgotRemainder: 'تنبيه ذكي: العدد {base} هو المضاعف المشترك المحصور في المجال، لكن لا تنسَ إضافة الباقي (+{rem}) لنحصل على {expected}!'
+        },
+        teacherBuilder: {
+          toggleTitle: '👨‍🏫 وضع الأستاذ (تمرين مخصّص للسبورة)',
+          toggleSub: 'أنشئ تمريناً فورياً بأعداد ومجال من اختيارك لعرضه على التلاميذ',
+          numALabel: 'العدد الأوّل (أ):',
+          numBLabel: 'العدد الثاني (ب):',
+          numCLabel: 'العدد الثالث (اختياري):',
+          minLabel: 'من (الحدّ الأدنى):',
+          maxLabel: 'إلى (الحدّ الأقصى):',
+          launchBtn: '🖥️ عرض التمرين على السبورة الآن',
+          invalidRange: 'تأكّد من إدخال أعداد صحيحة موجبة وأن يكون الحدّ الأقصى أكبر من الحدّ الأدنى.'
+        },
+        worksheet: {
+          printBtn: '🖨️ طباعة ورقة عمل (A4)',
+          headerTitle: 'ورقة عمل تدريبية: المضاعفات المشتركة',
+          schoolLine: 'السنة السادسة نحو النموذجي • إعداد الأستاذ: مجدي الشابي',
+          studentField: 'الاسم واللقب: ................................................',
+          classField: 'القسم: السادسة .......',
+          dateField: 'التاريخ: .... / .... / 2026',
+          scoreField: 'العدد: ..... / 20',
+          instructions: 'التعليمة: أجب بدقّة عن التمارين التالية مع تعليل النتيجة في المسائل.',
+          answerSpace: 'الإجابة:'
+        },
+        teamEnhancements: {
+          stealBanner: '⚡ فرصة خطف النقطة! دور {team} للإجابة وكسب +15 نقطة إضافية!',
+          stealSuccess: '🔥 خطف رائع! {team} انتزع النقطة بنجاح!',
+          podiumTitle: '🏅 منصّة تتويج الفريقين',
+          winnerLabel: 'البطل المتوّج',
+          runnerUpLabel: 'المركز الثاني',
+          tieLabel: 'تعادل بطولي مشرّف!'
+        }
+      },
+
+      fr: {
+        badge: '6e Année Vers le Pilote ↗',
+        appTitle: "L'Aventure des Multiples Communs",
+        smartboard: 'Mode Tableau',
+        fbBanner: "📱 Tu joues dans l'application Facebook : maintiens ton doigt sur le certificat à la fin pour l'enregistrer, ou ouvre le lien dans Chrome / Safari.",
+        heroTitle: "L'Aventure des Multiples Communs",
+        heroSubtitle: 'Entraîne-toi sur les multiples communs et le PPCM (Plus petit multiple commun non nul) pour réussir le concours des collèges pilotes !',
+        followFbBtn: '📘 Suivre notre page Facebook',
+        customizeLogo: 'Changer le logo',
+        resetLogoShort: 'Logo par défaut',
+        tapLogoHint: 'Clique pour changer le logo (fichier, coller Ctrl+V ou URL)',
+        studentNameLabel: "Nom de l'élève (imprimé sur le certificat) :",
+        studentNamePlaceholder: 'Écris ton nom complet ici...',
+        chooseMode: '1. Choisis un mode de jeu :',
+        modes: {
+          learn: { title: 'Mode Apprentissage', desc: 'Sans chrono • Indices étape par étape pour réviser' },
+          challenge: { title: 'Mode Défi', desc: 'Compte à rebours • Multiplicateur • 3 cœurs ❤️❤️❤️' },
+          team: { title: 'Défi 2 Équipes', desc: 'Scoreboard en classe : Équipe A contre Équipe B' },
+          daily: { title: 'Défi du Jour', desc: '5 questions identiques aujourd’hui pour comparer vos scores' }
+        },
+        chooseLevel: "2. Lance l'aventure ou choisis un niveau :",
+        startAllBtn: "Commencer l'Aventure Complète (Niveaux 1 → 4)",
+        levels: [
+          { id: 1, name: 'Niveau 1 : Chasseur de Multiples & Encadrement' },
+          { id: 2, name: 'Niveau 2 : Grille Interactive & Brouillon Intelligent' },
+          { id: 3, name: 'Niveau 3 : Problèmes & Justification' },
+          { id: 4, name: 'Niveau 4 : Défi Pilote (3 Nombres)' }
+        ],
+        teamA: 'Équipe A',
+        teamB: 'Équipe B',
+        turnOf: 'Tour de :',
+        scoreLabel: 'Score :',
+        qProgress: 'Question',
+        divHintBtn: '💡 Critère de divisibilité',
+        stepHintBtn: '🧭 Indice étape par étape',
+        submitBtn: 'Valider la réponse ✓',
+        nextBtn: 'Question suivante ➔',
+        finishBtn: 'Voir le résultat et le certificat 🏆',
+        homeBtn: 'Accueil',
+        correctFeedback: 'Bravo ! Excellente réponse.',
+        wrongFeedback: 'Réponse incorrecte — lis la correction ci-dessous :',
+        timeUpFeedback: 'Temps écoulé ! Voici la solution :',
+        boardTitle: "Grille d'intersection interactive :",
+        toggleA: 'Multiples de',
+        toggleB: 'Multiples de',
+        commonLegend: 'Communs (Vert)',
+        scratchTitle: 'Brouillon intelligent (Comptage par bonds) :',
+        endScreen: {
+          title: 'Résultat & Certificat de Réussite',
+          certTitle: 'Certificat de Champion des Multiples',
+          certSubtitle: 'Décerné pour l’excellence en mathématiques — 6e année primaire',
+          defaultStudent: 'Élève Brillant(e)',
+          modeLabel: 'Mode :',
+          scoreLabel: 'Score :',
+          accuracyLabel: 'Précision :',
+          dateLabel: 'Date :',
+          downloadPng: '📥 Télécharger le Certificat (PNG)',
+          copyFb: '📋 Copier le texte pour Facebook',
+          openFbPage: '📘 Ouvrir la page Facebook pour commenter',
+          playAgain: '🔄 Rejouer avec de nouveaux nombres',
+          longPressHint: '💡 Sur mobile : appuie longuement sur le certificat pour l’enregistrer dans ta galerie.',
+          mistakeTitle: 'Révision des erreurs et solutions détaillées',
+          noMistakes: '🌟 Parfait ! Aucune erreur durant cette partie !',
+          yourAns: 'Ta réponse :',
+          correctAns: 'Bonne réponse :',
+          explanation: 'Explication :'
+        },
+        modal: {
+          title: 'Personnaliser le logo et la signature',
+          uploadLabel: 'Choisis un fichier, glisse-le ici ou colle une image (Ctrl+V) :',
+          pickFileBtn: 'Choisir une image sur l’appareil',
+          dropHint: 'Ou glisse-dépose l’image ici • Ou appuie sur Ctrl+V pour coller',
+          urlLabel: 'Ou colle l’URL du logo :',
+          urlApplyBtn: 'Appliquer',
+          teacherLabel: "Signature de l'enseignant / école sur le certificat :",
+          resetBtn: 'Logo par défaut',
+          saveBtn: 'Enregistrer'
+        },
+        footer: 'السنة السادسة نحو النموذجي • Prof. Mejdi Chebbi',
+        footerFb: 'Suivez notre page officielle Facebook : السنة السادسة نحو النموذجي',
+        toastCopied: 'Texte copié ! Ouvre notre page Facebook et colle ton score avec ton certificat en commentaire.',
+        toastLogoUpdated: 'Logo mis à jour avec succès ! / تم تحديث الشعار بنجاح !',
+        toastLogoReset: 'Logo par défaut restauré !',
+        toastUrlError: 'Impossible de charger cette URL. Essaie de coller l’image (Ctrl+V) ou choisir un fichier.',
+        toastSelectOne: 'Sélectionne au moins un nombre avant de valider !',
+        ppcmLadder: {
+          toggleBtn: '⚡ Méthode rapide du PPCM (Échelle des multiples)',
+          subtitle: 'On teste les multiples du plus grand nombre ({max}) un par un jusqu’au premier divisible par les autres :',
+          stepRow: '{max} × {k} = {val}',
+          divYes: 'Divisible par {d} ✅',
+          divNo: 'Non divisible par {d} ❌',
+          foundBadge: '🎯 Trouvé ! PPCM = {lcm}'
+        },
+        nearMiss: {
+          pickedZero: 'Astuce diagnostic : 0 est bien un multiple commun, mais l’énoncé précise « non nul » ! On cherche le plus petit multiple commun strictement supérieur à 0.',
+          pickedDivisor: 'Astuce diagnostic : {val} est un « diviseur commun » (plus petit ou égal), alors qu’un « multiple commun » est toujours plus grand ou égal au plus grand nombre !',
+          forgotRemainder: 'Astuce diagnostic : {base} est bien le multiple commun dans l’intervalle, mais n’oublie pas d’ajouter le reste (+{rem}) pour obtenir {expected} !'
+        },
+        teacherBuilder: {
+          toggleTitle: '👨‍🏫 Mode Enseignant (Exercice personnalisé au tableau)',
+          toggleSub: 'Crée instantanément un exercice sur mesure avec tes propres nombres et bornes',
+          numALabel: 'Nombre A :',
+          numBLabel: 'Nombre B :',
+          numCLabel: 'Nombre C (optionnel) :',
+          minLabel: 'De (Minimum) :',
+          maxLabel: 'À (Maximum) :',
+          launchBtn: '🖥️ Projeter sur le tableau maintenant',
+          invalidRange: 'Vérifie que les nombres sont valides et que le Maximum est supérieur au Minimum.'
+        },
+        worksheet: {
+          printBtn: '🖨️ Imprimer une fiche A4',
+          headerTitle: 'Fiche d’exercices : Les Multiples Communs (6e année)',
+          schoolLine: 'السنة السادسة نحو النموذجي • Prof. Mejdi Chebbi',
+          studentField: 'Nom et Prénom : .............................................',
+          classField: 'Classe : 6e .......',
+          dateField: 'Date : .... / .... / 2026',
+          scoreField: 'Note : ..... / 20',
+          instructions: 'Consigne : Réponds avec précision aux exercices suivants en justifiant tes réponses.',
+          answerSpace: 'Réponse :'
+        },
+        teamEnhancements: {
+          stealBanner: '⚡ Chance de vol de point ! C’est au tour de {team} de répondre pour +15 pts !',
+          stealSuccess: '🔥 Superbe interception ! {team} remporte le point !',
+          podiumTitle: '🏅 Podium des Deux Équipes',
+          winnerLabel: 'Équipe Championne',
+          runnerUpLabel: '2e Place',
+          tieLabel: 'Égalité parfaite !'
+        }
+      },
+
+      en: {
+        badge: 'Grade 6 Towards Pilot Prep ↗',
+        appTitle: 'Common Multiples Adventure',
+        smartboard: 'Smartboard Mode',
+        fbBanner: '📱 Opening inside Facebook App: long-press your certificate image at the end to save it, or open this link in Chrome / Safari.',
+        heroTitle: 'Common Multiples Adventure',
+        heroSubtitle: 'Master common multiples and the Least Common Multiple (LCM) to ace the 6th-grade Pilot Middle School entrance exam!',
+        followFbBtn: '📘 Follow Our Facebook Page',
+        customizeLogo: 'Change Logo',
+        resetLogoShort: 'Reset Default Logo',
+        tapLogoHint: 'Tap to change logo (file, paste Ctrl+V, or URL)',
+        studentNameLabel: 'Student Name (printed on certificate):',
+        studentNamePlaceholder: 'Type your full name here...',
+        chooseMode: '1. Choose a Game Mode:',
+        modes: {
+          learn: { title: 'Learning Mode', desc: 'No timer • Step-by-step hints for home study' },
+          challenge: { title: 'Challenge Mode', desc: 'Countdown timer • Streak multiplier • 3 hearts ❤️❤️❤️' },
+          team: { title: '2-Team Classroom', desc: 'Turn-based classroom scoreboard: Team A vs Team B' },
+          daily: { title: 'Daily Challenge', desc: 'Date-seeded 5-question challenge to compare scores on Facebook' }
+        },
+        chooseLevel: '2. Launch Adventure or Pick a Level:',
+        startAllBtn: 'Start Full Adventure (Levels 1 → 4)',
+        levels: [
+          { id: 1, name: 'Level 1: Multiple Hunter & Range Bounding' },
+          { id: 2, name: 'Level 2: Interactive Board & Skip-Counter' },
+          { id: 3, name: 'Level 3: Word Problems & Reasoning' },
+          { id: 4, name: 'Level 4: Pilot Concours Boss (3 Numbers)' }
+        ],
+        teamA: 'Team A',
+        teamB: 'Team B',
+        turnOf: 'Turn:',
+        scoreLabel: 'Score:',
+        qProgress: 'Question',
+        divHintBtn: '💡 Divisibility Rule',
+        stepHintBtn: '🧭 Step-by-Step Hint',
+        submitBtn: 'Submit Answer ✓',
+        nextBtn: 'Next Question ➔',
+        finishBtn: 'See Results & Certificate 🏆',
+        homeBtn: 'Home',
+        correctFeedback: 'Awesome! That is correct.',
+        wrongFeedback: 'Not quite — review the explanation below:',
+        timeUpFeedback: 'Time is up! Here is the solution:',
+        boardTitle: 'Interactive Intersection Board:',
+        toggleA: 'Multiples of',
+        toggleB: 'Multiples of',
+        commonLegend: 'Common (Green)',
+        scratchTitle: 'Smart Scratchpad (Skip-Counter):',
+        endScreen: {
+          title: 'Adventure Results & Certificate',
+          certTitle: 'Common Multiples Champion Certificate',
+          certSubtitle: 'Awarded for excellence in 6th-grade primary mathematics',
+          defaultStudent: 'Outstanding Student',
+          modeLabel: 'Mode:',
+          scoreLabel: 'Score:',
+          accuracyLabel: 'Accuracy:',
+          dateLabel: 'Date:',
+          downloadPng: '📥 Download Certificate as PNG',
+          copyFb: '📋 Copy Facebook Share Caption',
+          openFbPage: '📘 Open Facebook Page to Comment Certificate',
+          playAgain: '🔄 Play Again with New Numbers',
+          longPressHint: '💡 On mobile: you can also long-press the certificate image to save it.',
+          mistakeTitle: 'Mistake Review & Step-by-Step Solutions',
+          noMistakes: '🌟 Flawless! Zero mistakes in this round!',
+          yourAns: 'Your answer:',
+          correctAns: 'Correct answer:',
+          explanation: 'Explanation:'
+        },
+        modal: {
+          title: 'Update Logo & Teacher Signature',
+          uploadLabel: 'Pick a file, drag it here, or paste an image (Ctrl+V):',
+          pickFileBtn: 'Choose Image from Device',
+          dropHint: 'Or drag & drop image here • Or press Ctrl+V to paste from clipboard',
+          urlLabel: 'Or paste a direct logo image URL:',
+          urlApplyBtn: 'Apply',
+          teacherLabel: 'Teacher / School Signature on Certificate:',
+          resetBtn: 'Reset Default Logo',
+          saveBtn: 'Save & Close'
+        },
+        footer: 'السنة السادسة نحو النموذجي • Prof. Mejdi Chebbi',
+        footerFb: 'Follow our official Facebook page: السنة السادسة نحو النموذجي',
+        toastCopied: 'Share caption copied! Open our Facebook page and paste your score with your certificate in the comments.',
+        toastLogoUpdated: 'Logo updated successfully! / تم تحديث الشعار بنجاح!',
+        toastLogoReset: 'Default crest logo restored!',
+        toastUrlError: 'Could not load image from that URL. Try pasting the image directly (Ctrl+V) or picking a file.',
+        toastSelectOne: 'Please select at least one number first!',
+        ppcmLadder: {
+          toggleBtn: '⚡ Fast LCM Multiplier Ladder',
+          subtitle: 'Test multiples of the largest number ({max}) step-by-step until the first one is divisible by the rest:',
+          stepRow: '{max} × {k} = {val}',
+          divYes: 'Divisible by {d} ✅',
+          divNo: 'Not divisible by {d} ❌',
+          foundBadge: '🎯 Found it! LCM = {lcm}'
+        },
+        nearMiss: {
+          pickedZero: 'Smart Diagnostic: 0 is indeed a common multiple of all numbers, but the question asked for a "non-zero" one! Look for the first common multiple above 0.',
+          pickedDivisor: 'Smart Diagnostic: {val} is a "common divisor" (smaller or equal), whereas a "common multiple" is always greater than or equal to the largest number!',
+          forgotRemainder: 'Smart Diagnostic: {base} is the common multiple in the range, but don’t forget to add the remainder (+{rem}) to get {expected}!'
+        },
+        teacherBuilder: {
+          toggleTitle: '👨‍🏫 Teacher Customizer (Smartboard Exercise Builder)',
+          toggleSub: 'Create an instant custom problem with your own numbers and range for class projection',
+          numALabel: 'Number A:',
+          numBLabel: 'Number B:',
+          numCLabel: 'Number C (optional):',
+          minLabel: 'From (Min):',
+          maxLabel: 'To (Max):',
+          launchBtn: '🖥️ Launch on Smartboard Now',
+          invalidRange: 'Please enter valid positive numbers and make sure Max is greater than Min.'
+        },
+        worksheet: {
+          printBtn: '🖨️ Print A4 Worksheet',
+          headerTitle: 'Practice Worksheet: Common Multiples (Grade 6)',
+          schoolLine: 'السنة السادسة نحو النموذجي • Prof. Mejdi Chebbi',
+          studentField: 'Student Name: ...............................................',
+          classField: 'Class: Grade 6 ....',
+          dateField: 'Date: .... / .... / 2026',
+          scoreField: 'Score: ..... / 20',
+          instructions: 'Instructions: Solve each exercise carefully and show your reasoning.',
+          answerSpace: 'Answer:'
+        },
+        teamEnhancements: {
+          stealBanner: '⚡ Steal Opportunity! {team} can now answer to steal +15 bonus points!',
+          stealSuccess: '🔥 Great steal! {team} captured the bonus points!',
+          podiumTitle: '🏅 Two-Team Classroom Podium',
+          winnerLabel: 'Champion Team',
+          runnerUpLabel: 'Runner-Up',
+          tieLabel: 'Heroic Tie!'
+        }
+      }
+    };
+
+    /**
+     * ============================================================================
+     * 7. DYNAMIC QUESTION GENERATORS (LEVELS 1 TO 4)
+     * ============================================================================
+     */
+    function pickRandom(arr, rng) {
+      return arr[Math.floor(rng() * arr.length)];
+    }
+
+    function shuffleArray(arr, rng) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getDivisibilityRuleHint(n) {
+      const rules = {
+        2: {
+          ar: 'قاعدة قابلية القسمة على 2: يكون العدد مضاعفاً لـ 2 إذا كان رقم آحاده زوجيّاً (0، 2، 4، 6، أو 8).',
+          fr: 'Critère de divisibilité par 2 : Un nombre est multiple de 2 si son chiffre des unités est pair (0, 2, 4, 6 ou 8).',
+          en: 'Divisibility rule for 2: A number is a multiple of 2 if its units digit is even (0, 2, 4, 6, or 8).'
+        },
+        3: {
+          ar: 'قاعدة قابلية القسمة على 3: يكون العدد مضاعفاً لـ 3 إذا كان مجموع أرقامه من مضاعفات 3.',
+          fr: 'Critère de divisibilité par 3 : Un nombre est multiple de 3 si la somme de ses chiffres est un multiple de 3.',
+          en: 'Divisibility rule for 3: A number is a multiple of 3 if the sum of its digits is a multiple of 3.'
+        },
+        5: {
+          ar: 'قاعدة قابلية القسمة على 5: يكون العدد مضاعفاً لـ 5 إذا كان رقم آحاده 0 أو 5.',
+          fr: 'Critère de divisibilité par 5 : Un nombre est multiple de 5 si son chiffre des unités est 0 ou 5.',
+          en: 'Divisibility rule for 5: A number is a multiple of 5 if its units digit is 0 or 5.'
+        },
+        9: {
+          ar: 'قاعدة قابلية القسمة على 9: يكون العدد مضاعفاً لـ 9 إذا كان مجموع أرقامه من مضاعفات 9.',
+          fr: 'Critère de divisibilité par 9 : Un nombre est multiple de 9 si la somme de ses chiffres est un multiple de 9.',
+          en: 'Divisibility rule for 9: A number is a multiple of 9 if the sum of its digits is a multiple of 9.'
+        }
+      };
+      return rules[n] || null;
+    }
+
+    function generateLevel1Question(rng, variant = 0) {
+      if (variant === 0) {
+        // Upper-bound multi-select including 0
+        const base = pickRandom([3, 4, 5, 6, 7, 8, 9], rng);
+        const upper = base * pickRandom([5, 6, 7], rng) + Math.floor(rng() * (base - 1)) + 1;
+        const correctAnswers = getMultiplesInRange(base, 0, upper, true);
+        const pool = new Set(correctAnswers);
+        while (pool.size < Math.min(8, correctAnswers.length + 3)) {
+          const candidate = Math.floor(rng() * (upper + 6));
+          if (candidate % base !== 0) pool.add(candidate);
+        }
+        const options = Array.from(pool).sort((a, b) => a - b);
+
+        return {
+          level: 1,
+          type: 'multi-select',
+          icon: '🎯',
+          prompt: {
+            ar: `حدّد جميع مضاعفات العدد ${base} الأصغر من ${upper} (لا تنسَ الصفر!):`,
+            fr: `Sélectionne tous les multiples de ${base} inférieurs à ${upper} (n'oublie pas 0 !) :`,
+            en: `Select all multiples of ${base} less than ${upper} (don't forget 0!):`
+          },
+          options,
+          correctAnswers,
+          divHint: getDivisibilityRuleHint(base),
+          stepHint: {
+            ar: `ابدأ من 0 ثمّ أضف ${base} في كلّ مرّة (0، ${base}، ${2 * base}...) حتّى تقترب من ${upper}.`,
+            fr: `Commence à 0 puis ajoute ${base} à chaque bond (0, ${base}, ${2 * base}...) sans dépasser ${upper}.`,
+            en: `Start at 0 and add ${base} each step (0, ${base}, ${2 * base}...) without exceeding ${upper}.`
+          },
+          explanation: {
+            ar: `0 هو مضاعف لكلّ عدد صحيح طبيعي. مضاعفات ${base} الأصغر من ${upper} هي: (${correctAnswers.join(' ، ')}).`,
+            fr: `0 est multiple de tout entier naturel. Les multiples de ${base} inférieurs à ${upper} sont : (${correctAnswers.join(', ')}).`,
+            en: `0 is a multiple of every natural number. The multiples of ${base} below ${upper} are: (${correctAnswers.join(', ')}).`
+          }
+        };
+      } else {
+        // Bounded range [minR, maxR]
+        const base = pickRandom([6, 7, 8, 9], rng);
+        const startMult = pickRandom([4, 5, 6], rng);
+        const minR = base * startMult - Math.floor(rng() * (base - 2)) - 1;
+        const maxR = base * (startMult + 2) + Math.floor(rng() * (base - 2)) + 1;
+        const correctAnswers = getMultiplesInRange(base, minR, maxR, false);
+        const pool = new Set(correctAnswers);
+        while (pool.size < Math.min(8, correctAnswers.length + 3)) {
+          const candidate = minR + Math.floor(rng() * (maxR - minR + 5));
+          if (candidate % base !== 0) pool.add(candidate);
+        }
+        const options = Array.from(pool).sort((a, b) => a - b);
+
+        return {
+          level: 1,
+          type: 'multi-select',
+          icon: '🧭',
+          prompt: {
+            ar: `اختر جميع مضاعفات العدد ${base} المحصورة بين ${minR} و ${maxR} :`,
+            fr: `Choisis tous les multiples de ${base} compris entre ${minR} et ${maxR} :`,
+            en: `Choose all multiples of ${base} between ${minR} and ${maxR}:`
+          },
+          options,
+          correctAnswers,
+          divHint: getDivisibilityRuleHint(base),
+          stepHint: {
+            ar: `ابحث عن أوّل مضاعف لـ ${base} أكبر من أو يساوي ${minR}، ثمّ واصل إضافة ${base} حتّى ${maxR}.`,
+            fr: `Trouve le premier multiple de ${base} ≥ ${minR}, puis ajoute ${base} jusqu'à ${maxR}.`,
+            en: `Find the first multiple of ${base} ≥ ${minR}, then keep adding ${base} up to ${maxR}.`
+          },
+          explanation: {
+            ar: `مضاعفات ${base} المحصورة بين ${minR} و ${maxR} هي: (${correctAnswers.join(' ، ')}).`,
+            fr: `Les multiples de ${base} compris entre ${minR} et ${maxR} sont : (${correctAnswers.join(', ')}).`,
+            en: `The multiples of ${base} between ${minR} and ${maxR} are: (${correctAnswers.join(', ')}).`
+          }
+        };
+      }
+    }
+
+    function generateLevel2Question(rng, variant = 0) {
+      const pairs = [
+        [4, 6],
+        [3, 5],
+        [4, 10],
+        [6, 9],
+        [6, 8],
+        [5, 6]
+      ];
+      const [numA, numB] = pickRandom(pairs, rng);
+      const common = lcm(numA, numB);
+      const gridMax = Math.min(60, Math.max(36, common * 2 + 6));
+
+      if (variant === 0) {
+        // Ask for non-zero LCM / PPCM
+        const distractors = new Set([common]);
+        [0, numA + numB, numA * numB === common ? common * 2 : numA * numB, common + numA, Math.max(2, common - numB)].forEach(
+          (cand) => {
+            if (cand !== common && distractors.size < 4) distractors.add(cand);
+          }
+        );
+        const options = shuffleArray(Array.from(distractors), rng);
+
+        return {
+          level: 2,
+          type: 'single-choice',
+          icon: '🟦🟨',
+          numA,
+          numB,
+          gridMax,
+          prompt: {
+            ar: `استعن باللوحة أو المسودة الذكية: ما هو أصغر مضاعف مشترك مخالف للصفر للعددين ${numA} و ${numB}؟`,
+            fr: `Aide-toi de la grille ou du brouillon : quel est le PPCM (plus petit multiple commun non nul) de ${numA} et ${numB} ?`,
+            en: `Use the board or smart scratchpad: what is the non-zero LCM (Least Common Multiple) of ${numA} and ${numB}?`
+          },
+          options,
+          correctAnswer: common,
+          stepHint: {
+            ar: `فعّل أزرار التلوين على اللوحة أو اضغط (+${numA}) و (+${numB}) في المسودة لملاحظة أوّل عدد مشترك أكبر من 0.`,
+            fr: `Active les couleurs sur la grille ou utilise (+${numA}) et (+${numB}) dans le brouillon pour repérer le premier nombre vert > 0.`,
+            en: `Toggle the board highlights or tap (+${numA}) and (+${numB}) in the scratchpad to spot the first green number > 0.`
+          },
+          explanation: {
+            ar: `أصغر مضاعف مشترك مخالف للصفر للعددين ${numA} و ${numB} هو ${common} (أوّل خانة خضراء بعد الصفر).`,
+            fr: `Le PPCM non nul de ${numA} et ${numB} est ${common} (la première case verte après 0).`,
+            en: `The non-zero LCM of ${numA} and ${numB} is ${common} (the first green cell after 0).`
+          }
+        };
+      } else {
+        // Ask for common multiples in a range
+        const maxR = gridMax;
+        const minR = 1;
+        const correctAnswers = getMultiplesInRange(common, minR, maxR, false);
+        const pool = new Set(correctAnswers);
+        pool.add(numA);
+        pool.add(numB);
+        while (pool.size < Math.min(7, correctAnswers.length + 3)) {
+          const cand = numA * (Math.floor(rng() * 5) + 1);
+          if (cand <= maxR && cand % common !== 0) pool.add(cand);
+          else pool.add(common + 3);
+        }
+        const options = Array.from(pool).sort((a, b) => a - b);
+
+        return {
+          level: 2,
+          type: 'multi-select',
+          icon: '🟩',
+          numA,
+          numB,
+          gridMax,
+          prompt: {
+            ar: `حدّد جميع المضاعفات المشتركة المخالفة للصفر للعددين ${numA} و ${numB} والأصغر من أو تساوي ${maxR} :`,
+            fr: `Sélectionne tous les multiples communs non nuls de ${numA} et ${numB} inférieurs ou égaux à ${maxR} :`,
+            en: `Select all non-zero common multiples of ${numA} and ${numB} less than or equal to ${maxR}:`
+          },
+          options,
+          correctAnswers,
+          stepHint: {
+            ar: `أصغر مضاعف مشترك مخالف للصفر هو ${common}، وكلّ مضاعفاته (${common}، ${2 * common}...) هي مضاعفات مشتركة.`,
+            fr: `Le PPCM non nul est ${common}, et tous ses multiples (${common}, ${2 * common}...) sont des multiples communs.`,
+            en: `The non-zero LCM is ${common}, and all its multiples (${common}, ${2 * common}...) are common multiples.`
+          },
+          explanation: {
+            ar: `المضاعفات المشتركة المخالفة للصفر للعددين ${numA} و ${numB} حتّى ${maxR} هي مضاعفات ${common} : (${correctAnswers.join(' ، ')}).`,
+            fr: `Les multiples communs non nuls de ${numA} et ${numB} jusqu'à ${maxR} sont les multiples de ${common} : (${correctAnswers.join(', ')}).`,
+            en: `The non-zero common multiples of ${numA} and ${numB} up to ${maxR} are multiples of ${common}: (${correctAnswers.join(', ')}).`
+          }
+        };
+      }
+    }
+
+    function generateLevel3Question(rng, variant = 0) {
+      const scenarios = [
+        () => {
+          const a = 4;
+          const b = 8;
+          const ans = 32;
+          return {
+            icon: '🏫',
+            metaNums: [a, b],
+            metaRemainder: 0,
+            metaBaseMultiple: ans,
+            promptAr: 'عدد تلاميذ قسم بالسنة السادسة محصور بين 30 و 35 تلميذاً. إذا وزّعهم المعلّم إلى مجموعات من 4 أو مجموعات من 8 لم يبقَ أيّ تلميذ خارج المجموعات. ما هو عدد تلاميذ هذا القسم؟',
+            promptFr: "Le nombre d'élèves d'une classe de 6e est compris entre 30 et 35. Si l'enseignant forme des groupes de 4 ou de 8 élèves, il ne reste aucun élève seul. Quel est l'effectif de cette classe ?",
+            promptEn: 'The number of 6th-grade students in a class is between 30 and 35. If the teacher forms groups of 4 or groups of 8, zero students are left over. How many students are in the class?',
+            ans,
+            distractors: [30, 34, 35],
+            stepAr: 'العدد يقبل القسمة على 4 و 8 معاً، فهو مضاعف مشترك لهما (أي مضاعف لـ 8) محصور بين 30 و 35.',
+            stepFr: 'Le nombre est divisible par 4 et 8 : c’est donc un multiple commun (multiple de 8) compris entre 30 et 35.',
+            stepEn: 'The number is divisible by both 4 and 8, so it is a common multiple (multiple of 8) between 30 and 35.',
+            explainAr: 'مضاعفات 8 هي: 8، 16، 24، 32، 40... والعدد الوحيد المحصور بين 30 و 35 هو 32 تلميذاً.',
+            explainFr: 'Les multiples de 8 sont : 8, 16, 24, 32, 40... Le seul compris entre 30 et 35 est 32 élèves.',
+            explainEn: 'Multiples of 8 are 8, 16, 24, 32, 40... The only one between 30 and 35 is 32 students.',
+            why: {
+              prompt: {
+                ar: 'لماذا اخترنا 32 دون غيره؟',
+                fr: 'Pourquoi 32 est-il la seule bonne réponse ?',
+                en: 'Why is 32 the only right answer?'
+              },
+              options: [
+                {
+                  ar: 'لأنّ 32 يقبل القسمة على 4 وعلى 8 في نفس الوقت ومحصور بين 30 و 35.',
+                  fr: 'Parce que 32 est divisible à la fois par 4 et par 8 et compris entre 30 et 35.',
+                  en: 'Because 32 is divisible by both 4 and 8 and lies between 30 and 35.',
+                  isCorrect: true
+                },
+                {
+                  ar: 'لأنّ 32 هو مجموع الأعداد 30 + 4 − 2.',
+                  fr: 'Parce que 32 est égal à 30 + 4 − 2.',
+                  en: 'Because 32 equals 30 + 4 − 2.',
+                  isCorrect: false
+                },
+                {
+                  ar: 'لأنّ 32 هو قاسم مشترك للعددين 4 و 8.',
+                  fr: 'Parce que 32 est un diviseur commun de 4 et 8.',
+                  en: 'Because 32 is a common divisor of 4 and 8.',
+                  isCorrect: false
+                }
+              ]
+            }
+          };
+        },
+        () => {
+          const [a, b] = pickRandom([[4, 6], [6, 9], [8, 12]], rng);
+          const common = lcm(a, b);
+          return {
+            icon: '🏃‍♂️',
+            metaNums: [a, b],
+            metaRemainder: 0,
+            metaBaseMultiple: common,
+            promptAr: `انطلق عدّاءان في نفس اللحظة حول مضمار دائري. يُتمّ الأوّل الدورة الواحدة في ${a} دقائق ويُتمّها الثاني في ${b} دقائق. بعد كم دقيقة يلتقيان لأوّل مرّة عند خطّ الانطلاق؟`,
+            promptFr: `Deux coureurs partent ensemble sur une piste circulaire. Le premier fait un tour en ${a} minutes et le second en ${b} minutes. Après combien de minutes se retrouvent-ils pour la première fois sur la ligne de départ ?`,
+            promptEn: `Two runners start together on a circular track. The first completes a lap in ${a} minutes and the second in ${b} minutes. After how many minutes do they first meet again at the starting line?`,
+            ans: common,
+            distractors: [a + b, Math.max(2, common - a), a * b === common ? common * 2 : a * b],
+            stepAr: `يلتقي العدّاءان عند أوّل مضاعف مشترك مخالف للصفر للعددين ${a} و ${b}.`,
+            stepFr: `Ils se retrouvent au premier multiple commun non nul (PPCM) de ${a} et ${b}.`,
+            stepEn: `They meet at the first non-zero common multiple (LCM) of ${a} and ${b}.`,
+            explainAr: `نبحث عن أصغر مضاعف مشترك مخالف للصفر للعددين ${a} و ${b}: مضاعفات ${a} هي (${a}، ${2 * a}، ${3 * a}...) ومضاعفات ${b} هي (${b}، ${2 * b}...). أوّل عدد مشترك بينهما هو ${common}.`,
+            explainFr: `Multiples non nuls de ${a} : (${a}, ${2 * a}...) et de ${b} : (${b}, ${2 * b}...). Le premier multiple commun non nul (PPCM) est ${common}.`,
+            explainEn: `Non-zero multiples of ${a}: (${a}, ${2 * a}...) and of ${b}: (${b}, ${2 * b}...). The least common multiple (LCM) is ${common}.`,
+            why: {
+              prompt: {
+                ar: 'لماذا اخترنا أصغر مضاعف مشترك مخالف للصفر؟',
+                fr: 'Pourquoi cherche-t-on le PPCM non nul ?',
+                en: 'Why do we look for the non-zero LCM?'
+              },
+              options: [
+                {
+                  ar: `لأنّ ${common} هو أوّل لحظة زمنية تقبل القسمة على ${a} و ${b} معاً بعد الانطلاق.`,
+                  fr: `Parce que ${common} est le premier instant divisible à la fois par ${a} et par ${b} après le départ.`,
+                  en: `Because ${common} is the first time after the start divisible by both ${a} and ${b}.`,
+                  isCorrect: true
+                },
+                {
+                  ar: `لأنّنا نجمع العددين (${a} + ${b}) دائماً.`,
+                  fr: `Parce qu'on additionne toujours (${a} + ${b}).`,
+                  en: `Because we always add (${a} + ${b}).`,
+                  isCorrect: false
+                },
+                {
+                  ar: `لأنّ ${common} هو قاسم مشترك للعددين ${a} و ${b}.`,
+                  fr: `Parce que ${common} est un diviseur commun de ${a} et ${b}.`,
+                  en: `Because ${common} is a common divisor of ${a} and ${b}.`,
+                  isCorrect: false
+                }
+              ]
+            }
+          };
+        },
+        () => {
+          return {
+            icon: '🐑',
+            metaNums: [5, 8],
+            metaRemainder: 3,
+            metaBaseMultiple: 80,
+            promptAr: 'يملك راعٍ عدداً من الخراف محصوراً بين 70 و 90. إذا عدّها خمسةً خمسةً أو ثمانيةً ثمانيةً بقي له دائماً 3 خراف. ما هو عدد الخراف؟',
+            promptFr: 'Un berger possède entre 70 et 90 moutons. Qu’il les compte par 5 ou par 8, il lui reste toujours 3 moutons. Combien a-t-il de moutons ?',
+            promptEn: 'A shepherd has between 70 and 90 sheep. Whether he counts them by 5s or by 8s, 3 sheep always remain. How many sheep does he have?',
+            ans: 83,
+            distractors: [80, 77, 85],
+            stepAr: 'ابحث أوّلاً عن المضاعف المشترك للعددين 5 و 8 المحصور بين 70 و 90، ثمّ أضف الباقي (3).',
+            stepFr: 'Trouve d’abord le multiple commun de 5 et 8 entre 70 et 90, puis ajoute le reste (3).',
+            stepEn: 'First find the common multiple of 5 and 8 between 70 and 90, then add the remainder (3).',
+            explainAr: 'العدد المطلوب يساوي مضاعفاً مشتركاً للعددين 5 و 8 (أي مضاعفاً لـ 40) محصوراً بين 70 و 90، مضافاً إليه الباقي 3: مضاعف 40 المحصور هو 80، إذن 80 + 3 = 83 خروفاً.',
+            explainFr: 'Le nombre cherché est un multiple commun de 5 et 8 (donc multiple de 40) entre 70 et 90, plus le reste 3 : 80 + 3 = 83 moutons.',
+            explainEn: 'The number is a common multiple of 5 and 8 (multiple of 40) between 70 and 90, plus remainder 3: 80 + 3 = 83 sheep.',
+            why: {
+              prompt: {
+                ar: 'كيف تحقّقنا من أنّ 83 هو الجواب الصحيح؟',
+                fr: 'Comment vérifie-t-on que 83 est la bonne réponse ?',
+                en: 'How do we verify that 83 is the right answer?'
+              },
+              options: [
+                {
+                  ar: 'لأنّ 83 − 3 = 80، والعدد 80 يقبل القسمة على 5 وعلى 8 في آنٍ واحد.',
+                  fr: 'Parce que 83 − 3 = 80, et 80 est divisible à la fois par 5 et par 8.',
+                  en: 'Because 83 − 3 = 80, and 80 is divisible by both 5 and 8.',
+                  isCorrect: true
+                },
+                {
+                  ar: 'لأنّ 83 يقبل القسمة على 3 فقط.',
+                  fr: 'Parce que 83 est divisible uniquement par 3.',
+                  en: 'Because 83 is divisible only by 3.',
+                  isCorrect: false
+                },
+                {
+                  ar: 'لأنّ 70 + 8 + 5 = 83.',
+                  fr: 'Parce que 70 + 8 + 5 = 83.',
+                  en: 'Because 70 + 8 + 5 = 83.',
+                  isCorrect: false
+                }
+              ]
+            }
+          };
+        },
+        () => {
+          return {
+            icon: '📚',
+            metaNums: [4, 6],
+            metaRemainder: 2,
+            metaBaseMultiple: 48,
+            promptAr: 'لِتلميذ مجموعة من الكتب عددها محصور بين 40 و 55. إذا رتّبها أربعةً أربعةً أو ستّةً ستّةً بقي له دائماً كتابان (2). ما هو عدد كتبه؟',
+            promptFr: 'Un élève possède entre 40 et 55 livres. Qu’il les range par piles de 4 ou de 6, il lui reste toujours 2 livres. Combien de livres possède-t-il ?',
+            promptEn: 'A student has between 40 and 55 books. Whether stacked in 4s or 6s, 2 books always remain. How many books does the student have?',
+            ans: 50,
+            distractors: [48, 46, 52],
+            stepAr: 'أوجد المضاعف المشترك للعددين 4 و 6 المحصور بين 40 و 55، ثمّ أضف الكتابين الباقيين.',
+            stepFr: 'Trouve le multiple commun de 4 et 6 entre 40 et 55, puis ajoute les 2 livres restants.',
+            stepEn: 'Find the common multiple of 4 and 6 between 40 and 55, then add the 2 remaining books.',
+            explainAr: 'أصغر مضاعف مشترك للعددين 4 و 6 هو 12. مضاعفات 12 هي: 12، 24، 36، 48. نأخذ 48 ونضيف الباقي 2: 48 + 2 = 50 كتاباً.',
+            explainFr: 'Le PPCM de 4 et 6 est 12. Le multiple de 12 entre 40 et 55 est 48. On ajoute le reste : 48 + 2 = 50 livres.',
+            explainEn: 'The LCM of 4 and 6 is 12. The multiple of 12 between 40 and 55 is 48. Adding the remainder gives 48 + 2 = 50 books.',
+            why: null
+          };
+        }
+      ];
+
+      const s = scenarios[variant % scenarios.length]();
+      const options = shuffleArray([s.ans, ...s.distractors], rng);
+
+      return {
+        level: 3,
+        type: 'single-choice',
+        icon: s.icon,
+        metaNums: s.metaNums,
+        metaRemainder: s.metaRemainder,
+        metaBaseMultiple: s.metaBaseMultiple,
+        prompt: { ar: s.promptAr, fr: s.promptFr, en: s.promptEn },
+        options,
+        correctAnswer: s.ans,
+        stepHint: { ar: s.stepAr, fr: s.stepFr, en: s.stepEn },
+        explanation: { ar: s.explainAr, fr: s.explainFr, en: s.explainEn },
+        whyQuestion: s.why
+      };
+    }
+
+    function generateLevel4Question(rng, variant = 0) {
+      const presets = [
+        { nums: [7, 12, 42], minR: 150, maxR: 200, target: 168 },
+        { nums: [4, 6, 8], minR: 300, maxR: 330, target: 312 },
+        { nums: [6, 9, 15], minR: 250, maxR: 300, target: 270 },
+        { nums: [5, 12, 15], minR: 320, maxR: 380, target: 360 }
+      ];
+      const chosen = presets[variant % presets.length];
+      const [a, b, c] = chosen.nums;
+      const common = lcm3(a, b, c);
+      const { minR, maxR, target } = chosen;
+
+      const distractors = new Set([target]);
+      [target - c, target + a, target - b, minR + 6].forEach((cand) => {
+        if (cand !== target && cand >= minR - 10 && distractors.size < 4) distractors.add(cand);
+      });
+      while (distractors.size < 4) {
+        distractors.add(target + distractors.size * 6);
+      }
+      const options = shuffleArray(Array.from(distractors), rng);
+
+      return {
+        level: 4,
+        type: 'single-choice',
+        icon: '👑',
+        tripleNums: [a, b, c],
+        numA: a,
+        numB: b,
+        prompt: {
+          ar: `تحدّي النموذجي: أوجد المضاعف المشترك للأعداد ${a} و ${b} و ${c} المحصور بين ${minR} و ${maxR} :`,
+          fr: `Défi Pilote : Trouve le multiple commun de ${a}, ${b} et ${c} compris entre ${minR} et ${maxR} :`,
+          en: `Pilot Challenge: Find the common multiple of ${a}, ${b}, and ${c} between ${minR} and ${maxR}:`
+        },
+        options,
+        correctAnswer: target,
+        stepHint: {
+          ar: `ابحث أوّلاً عن أصغر مضاعف مشترك مخالف للصفر للأعداد (${a}، ${b}، ${c}) وهو ${common}، ثمّ اضربه حتّى يدخل المجال [${minR} ، ${maxR}].`,
+          fr: `Trouve d'abord le PPCM non nul de (${a}, ${b}, ${c}) qui est ${common}, puis cherche son multiple dans [${minR}, ${maxR}].`,
+          en: `First find the non-zero LCM of (${a}, ${b}, ${c}) which is ${common}, then find its multiple inside [${minR}, ${maxR}].`
+        },
+        explanation: {
+          ar: `أصغر مضاعف مشترك مخالف للصفر للأعداد ${a} و ${b} و ${c} هو ${common}. مضاعفاته هي: ${common}، ${2 * common}، ${3 * common}... والعدد المحصور بين ${minR} و ${maxR} هو ${target}.`,
+          fr: `Le PPCM non nul de ${a}, ${b} et ${c} est ${common}. Ses multiples sont ${common}, ${2 * common}, ${3 * common}... Celui compris entre ${minR} et ${maxR} est ${target}.`,
+          en: `The non-zero LCM of ${a}, ${b}, and ${c} is ${common}. Its multiples are ${common}, ${2 * common}, ${3 * common}... The one between ${minR} and ${maxR} is ${target}.`
+        }
+      };
+    }
+
+    function generateSessionQuestions(selectedLevel, rng) {
+      if (selectedLevel === 1) {
+        return [generateLevel1Question(rng, 0), generateLevel1Question(rng, 1), generateLevel1Question(rng, 0)];
+      }
+      if (selectedLevel === 2) {
+        return [generateLevel2Question(rng, 0), generateLevel2Question(rng, 1), generateLevel2Question(rng, 0)];
+      }
+      if (selectedLevel === 3) {
+        return [generateLevel3Question(rng, 0), generateLevel3Question(rng, 1), generateLevel3Question(rng, 2)];
+      }
+      if (selectedLevel === 4) {
+        return [generateLevel4Question(rng, 0), generateLevel4Question(rng, 1), generateLevel4Question(rng, 2)];
+      }
+      // Full Adventure or Daily Challenge (balanced progression)
+      return [
+        generateLevel1Question(rng, 0),
+        generateLevel1Question(rng, 1),
+        generateLevel2Question(rng, 0),
+        generateLevel2Question(rng, 1),
+        generateLevel3Question(rng, 0),
+        generateLevel3Question(rng, 2),
+        generateLevel4Question(rng, 0),
+        generateLevel4Question(rng, 1)
+      ];
+    }
+
+    /**
+     * ============================================================================
+     * 8. MAIN APPLICATION STATE & CONTROLLER
+     * ============================================================================
+     */
+    const app = {
+      state: {
+        lang: 'ar',
+        smartboard: false,
+        screen: 'home', // 'home' | 'game' | 'end'
+        studentName: '',
+        selectedMode: 'learn',
+        customLogoDataUrl: null,
+        teacherSignature: 'الأستاذ مجدي الشابي',
+
+        // Game Session State
+        questions: [],
+        qIndex: 0,
+        score: 0,
+        streak: 0,
+        hearts: 3,
+        timeLeft: 45,
+        timerInterval: null,
+        teamScores: { A: 0, B: 0 },
+        currentTeam: 'A',
+        history: [],
+
+        // Owner Admin Unlock State (Session-Only)
+        adminUnlocked: false,
+
+        // Active Question Interaction State
+        selectedChoices: [],
+        answered: false,
+        isCorrect: false,
+        nearMissNote: null,
+        showDivHint: false,
+        showStepHint: false,
+        showPpcmLadder: false,
+        awaitingWhy: false,
+        whyAnswered: false,
+        whySelectedIdx: null,
+        stealActive: false,
+
+        // Teacher Custom Builder State
+        showTeacherBuilder: false,
+        teacherCustom: {
+          numA: 8,
+          numB: 12,
+          numC: '',
+          minR: 100,
+          maxR: 200
+        },
+
+        // Level 2 Board State
+        highlightA: false,
+        highlightB: false,
+        scratchCounts: [1, 1]
+      },
+
+      init() {
+        try {
+          if (OFFICIAL_REPO_LOGO) {
+            this.state.customLogoDataUrl = OFFICIAL_REPO_LOGO;
+          } else {
+            const savedLogo = localStorage.getItem(CUSTOM_LOGO_STORAGE_KEY);
+            if (savedLogo) this.state.customLogoDataUrl = savedLogo;
+          }
+          const savedSig = localStorage.getItem(TEACHER_SIG_STORAGE_KEY);
+          if (savedSig) this.state.teacherSignature = savedSig;
+        } catch (e) {}
+
+        // Auto-detect ./logo.png or ./logo.jpg when hosted on GitHub Pages
+        if (!this.state.customLogoDataUrl) {
+          this.probeRepoLogoFiles(0);
+        }
+
+        // Open Owner Modal automatically if URL contains ?admin=1
+        try {
+          const params = new URLSearchParams(window.location.search);
+          if (params.get('admin') === '1') {
+            setTimeout(() => this.openSettingsModal(), 250);
+          }
+        } catch (e) {}
+
+        // Detect Facebook In-App WebView
+        const ua = navigator.userAgent || '';
+        if (/FBAN|FBAV|Instagram/i.test(ua)) {
+          const fbBanner = document.getElementById('fb-webview-banner');
+          if (fbBanner) fbBanner.classList.remove('hidden');
+        }
+
+        // Clipboard Paste Support for Owner Logo Modal (only when unlocked)
+        window.addEventListener('paste', (e) => {
+          const modal = document.getElementById('logo-modal');
+          if (!modal || modal.classList.contains('hidden') || !this.state.adminUnlocked) return;
+          const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items || [];
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+              const file = items[i].getAsFile();
+              if (file) this.processLogoFile(file);
+              break;
+            }
+          }
+        });
+
+        this.updateChromeTexts();
+        this.render();
+      },
+
+      probeRepoLogoFiles(idx) {
+        if (idx >= REPO_LOGO_FILES.length || this.state.customLogoDataUrl) return;
+        const candidateUrl = REPO_LOGO_FILES[idx];
+        const testImg = new Image();
+        testImg.onload = () => {
+          this.state.customLogoDataUrl = candidateUrl;
+          this.refreshLogoSlots();
+          this.render();
+        };
+        testImg.onerror = () => {
+          this.probeRepoLogoFiles(idx + 1);
+        };
+        testImg.src = candidateUrl;
+      },
+
+      getLogoMarkup(imgClass = 'w-full h-full object-cover rounded-full') {
+        if (this.state.customLogoDataUrl) {
+          return `<img src="${this.state.customLogoDataUrl}" alt="السنة السادسة نحو النموذجي" class="${imgClass}" />`;
+        }
+        return getDefaultCrestSVG('w-full h-full');
+      },
+
+      refreshLogoSlots() {
+        const headerSlot = document.getElementById('header-logo-slot');
+        const footerSlot = document.getElementById('footer-logo-slot');
+        const modalSlot = document.getElementById('modal-logo-preview');
+        const markup = this.getLogoMarkup('w-full h-full object-cover rounded-full');
+        if (headerSlot) headerSlot.innerHTML = markup;
+        if (footerSlot) footerSlot.innerHTML = markup;
+        if (modalSlot) modalSlot.innerHTML = markup;
+      },
+
+      showToast(msg) {
+        const box = document.getElementById('toast-box');
+        const textEl = document.getElementById('toast-msg');
+        if (!box || !textEl) return;
+        textEl.textContent = msg;
+        box.classList.remove('hidden');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => {
+          box.classList.add('hidden');
+        }, 3600);
+      },
+
+      setLang(lang) {
+        SoundFX.pop();
+        this.state.lang = lang;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        this.updateChromeTexts();
+        this.render();
+        if (this.state.screen === 'end') {
+          setTimeout(() => this.drawCertificateCanvas(), 40);
+        }
+      },
+
+      updateChromeTexts() {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const setTxt = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = val;
+        };
+
+        setTxt('header-badge-text', t.badge);
+        setTxt('header-app-title', t.appTitle);
+        setTxt('smartboard-label', t.smartboard);
+        setTxt('fb-webview-text', t.fbBanner);
+        setTxt('footer-text', t.footer);
+        setTxt('footer-fb-label', t.footerFb);
+
+        setTxt('modal-upload-label', t.modal.uploadLabel);
+        setTxt('modal-pick-file-btn', t.modal.pickFileBtn);
+        setTxt('modal-drop-hint', t.modal.dropHint);
+        setTxt('modal-url-label', t.modal.urlLabel);
+        setTxt('modal-url-apply-btn', t.modal.urlApplyBtn);
+        setTxt('modal-teacher-label', t.modal.teacherLabel);
+        setTxt('modal-reset-btn', t.modal.resetBtn);
+        setTxt('modal-save-btn', t.modal.saveBtn);
+
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          const active = btn.getAttribute('data-lang-btn') === lang;
+          btn.className = active
+            ? 'lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-[#C8102E] text-white shadow-xs'
+            : 'lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all text-slate-600 hover:text-[#1B2A4A]';
+        });
+
+        this.refreshLogoSlots();
+      },
+
+      toggleSmartboard() {
+        SoundFX.pop();
+        this.state.smartboard = !this.state.smartboard;
+        document.documentElement.classList.toggle('smartboard-mode', this.state.smartboard);
+        const btn = document.getElementById('btn-smartboard');
+        if (btn) {
+          btn.classList.toggle('bg-[#1B2A4A]', this.state.smartboard);
+          btn.classList.toggle('text-white', this.state.smartboard);
+        }
+      },
+
+      toggleMute() {
+        SoundFX.muted = !SoundFX.muted;
+        const btn = document.getElementById('btn-mute');
+        if (btn) btn.textContent = SoundFX.muted ? '🔇' : '🔊';
+        if (!SoundFX.muted) SoundFX.pop();
+      },
+
+      openSettingsModal() {
+        SoundFX.pop();
+        const modal = document.getElementById('logo-modal');
+        const pinGate = document.getElementById('admin-pin-gate');
+        const unlockedPanel = document.getElementById('admin-unlocked-panel');
+        const pinInput = document.getElementById('admin-pin-input');
+        const sigInput = document.getElementById('teacher-signature-input');
+
+        if (sigInput) sigInput.value = this.state.teacherSignature;
+        if (pinInput) pinInput.value = '';
+
+        if (this.state.adminUnlocked) {
+          if (pinGate) pinGate.classList.add('hidden');
+          if (unlockedPanel) unlockedPanel.classList.remove('hidden');
+        } else {
+          if (pinGate) pinGate.classList.remove('hidden');
+          if (unlockedPanel) unlockedPanel.classList.add('hidden');
+        }
+
+        this.refreshLogoSlots();
+        if (modal) modal.classList.remove('hidden');
+        if (!this.state.adminUnlocked && pinInput) {
+          setTimeout(() => pinInput.focus(), 80);
+        }
+      },
+
+      verifyAdminPin() {
+        const pinInput = document.getElementById('admin-pin-input');
+        const entered = pinInput ? pinInput.value.trim() : '';
+        if (entered === OWNER_ADMIN_PIN) {
+          SoundFX.correct();
+          this.state.adminUnlocked = true;
+          const pinGate = document.getElementById('admin-pin-gate');
+          const unlockedPanel = document.getElementById('admin-unlocked-panel');
+          if (pinGate) pinGate.classList.add('hidden');
+          if (unlockedPanel) unlockedPanel.classList.remove('hidden');
+          this.refreshLogoSlots();
+        } else {
+          SoundFX.wrong();
+          if (pinInput) {
+            pinInput.value = '';
+            pinInput.classList.add('border-rose-500', 'animate-shake');
+            setTimeout(() => pinInput.classList.remove('border-rose-500', 'animate-shake'), 450);
+          }
+          this.showToast('❌ الرمز السرّي غير صحيح — هذه اللوحة للمالك فقط.');
+        }
+      },
+
+      copyGitHubLogoConstant() {
+        const val = this.state.customLogoDataUrl || './logo.png';
+        const snippet = `const OFFICIAL_REPO_LOGO = '${val}';`;
+        const ta = document.createElement('textarea');
+        ta.value = snippet;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+        } catch (e) {}
+        document.body.removeChild(ta);
+        this.showToast('✅ تمّ نسخ كود الشعار! الصقه مكان سطر OFFICIAL_REPO_LOGO في ملف index.html قبل رفعه على GitHub.');
+      },
+
+      closeSettingsModal() {
+        const modal = document.getElementById('logo-modal');
+        if (modal) modal.classList.add('hidden');
+      },
+
+      saveSettingsModal() {
+        const sigInput = document.getElementById('teacher-signature-input');
+        if (sigInput && sigInput.value.trim()) {
+          this.state.teacherSignature = sigInput.value.trim();
+          try {
+            localStorage.setItem(TEACHER_SIG_STORAGE_KEY, this.state.teacherSignature);
+          } catch (e) {}
+        }
+        this.closeSettingsModal();
+        this.render();
+        if (this.state.screen === 'end') {
+          setTimeout(() => this.drawCertificateCanvas(), 40);
+        }
+      },
+
+      processLogoFile(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 360;
+            canvas.height = 360;
+            const ctx = canvas.getContext('2d');
+            const side = Math.min(img.width, img.height);
+            const sx = (img.width - side) / 2;
+            const sy = (img.height - side) / 2;
+            ctx.drawImage(img, sx, sy, side, side, 0, 0, 360, 360);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+            this.state.customLogoDataUrl = dataUrl;
+            try {
+              localStorage.setItem(CUSTOM_LOGO_STORAGE_KEY, dataUrl);
+            } catch (e) {}
+            this.refreshLogoSlots();
+            this.render();
+            if (this.state.screen === 'end') {
+              setTimeout(() => this.drawCertificateCanvas(), 40);
+            }
+            this.showToast(I18N[this.state.lang].toastLogoUpdated);
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+
+      handleCustomLogoUpload(e) {
+        const file = e.target?.files?.[0];
+        if (file) this.processLogoFile(file);
+      },
+
+      handleLogoDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('bg-rose-100', 'border-[#C8102E]');
+        const file = e.dataTransfer?.files?.[0];
+        if (file) this.processLogoFile(file);
+      },
+
+      applyLogoFromUrl() {
+        const input = document.getElementById('logo-url-input');
+        const url = input ? input.value.trim() : '';
+        if (!url) return;
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          this.state.customLogoDataUrl = url;
+          try {
+            localStorage.setItem(CUSTOM_LOGO_STORAGE_KEY, url);
+          } catch (e) {}
+          this.refreshLogoSlots();
+          this.render();
+          if (this.state.screen === 'end') {
+            setTimeout(() => this.drawCertificateCanvas(), 40);
+          }
+          this.showToast(I18N[this.state.lang].toastLogoUpdated);
+        };
+        img.onerror = () => {
+          this.showToast(I18N[this.state.lang].toastUrlError);
+        };
+        img.src = url;
+      },
+
+      resetCustomLogo() {
+        this.state.customLogoDataUrl = null;
+        try {
+          localStorage.removeItem(CUSTOM_LOGO_STORAGE_KEY);
+        } catch (e) {}
+        this.refreshLogoSlots();
+        this.render();
+        if (this.state.screen === 'end') {
+          setTimeout(() => this.drawCertificateCanvas(), 40);
+        }
+        this.showToast(I18N[this.state.lang].toastLogoReset);
+      },
+
+      selectMode(mode) {
+        SoundFX.pop();
+        this.state.selectedMode = mode;
+        this.render();
+      },
+
+      updateStudentName(val) {
+        this.state.studentName = val;
+      },
+
+      startGame(levelId = null) {
+        SoundFX.levelUp();
+        this.stopTimer();
+
+        const todayKey = new Date().toISOString().slice(0, 10);
+        const rng =
+          this.state.selectedMode === 'daily'
+            ? createSeededRng(`tunisia-g6-${todayKey}`)
+            : () => Math.random();
+
+        let questions = generateSessionQuestions(levelId, rng);
+        if (this.state.selectedMode === 'daily' && levelId === null) {
+          questions = questions.slice(0, 5);
+        }
+
+        this.state.questions = questions;
+        this.state.qIndex = 0;
+        this.state.score = 0;
+        this.state.streak = 0;
+        this.state.hearts = 3;
+        this.state.teamScores = { A: 0, B: 0 };
+        this.state.currentTeam = 'A';
+        this.state.history = [];
+        this.state.screen = 'game';
+        this.resetQuestionState();
+        this.startTimerIfNeeded();
+        this.render();
+      },
+
+      goHome() {
+        SoundFX.pop();
+        this.stopTimer();
+        this.state.screen = 'home';
+        this.render();
+      },
+
+      startTimerIfNeeded() {
+        this.stopTimer();
+        if (this.state.selectedMode !== 'challenge') return;
+        this.state.timeLeft = 45;
+        this.state.timerInterval = setInterval(() => {
+          if (this.state.answered) return;
+          this.state.timeLeft -= 1;
+          const timerEl = document.getElementById('challenge-timer');
+          if (timerEl) timerEl.textContent = `${this.state.timeLeft}s`;
+          if (this.state.timeLeft <= 0) {
+            this.submitAnswer(true);
+          }
+        }, 1000);
+      },
+
+      stopTimer() {
+        if (this.state.timerInterval) {
+          clearInterval(this.state.timerInterval);
+          this.state.timerInterval = null;
+        }
+      },
+
+      resetQuestionState() {
+        this.state.selectedChoices = [];
+        this.state.answered = false;
+        this.state.isCorrect = false;
+        this.state.nearMissNote = null;
+        this.state.showDivHint = false;
+        this.state.showStepHint = false;
+        this.state.showPpcmLadder = false;
+        this.state.awaitingWhy = false;
+        this.state.whyAnswered = false;
+        this.state.whySelectedIdx = null;
+        this.state.stealActive = false;
+        this.state.highlightA = false;
+        this.state.highlightB = false;
+        this.state.scratchCounts = [1, 1, 1];
+      },
+
+      toggleTeacherBuilder() {
+        SoundFX.pop();
+        this.state.showTeacherBuilder = !this.state.showTeacherBuilder;
+        this.render();
+      },
+
+      updateTeacherCustomField(field, val) {
+        this.state.teacherCustom[field] = val;
+      },
+
+      launchTeacherCustomExercise() {
+        const lang = this.state.lang;
+        const tb = I18N[lang].teacherBuilder;
+        const a = parseInt(this.state.teacherCustom.numA, 10);
+        const b = parseInt(this.state.teacherCustom.numB, 10);
+        const cRaw = String(this.state.teacherCustom.numC || '').trim();
+        const c = cRaw ? parseInt(cRaw, 10) : null;
+        const minR = parseInt(this.state.teacherCustom.minR, 10);
+        const maxR = parseInt(this.state.teacherCustom.maxR, 10);
+
+        if (
+          isNaN(a) || a < 2 ||
+          isNaN(b) || b < 2 ||
+          (c !== null && (isNaN(c) || c < 2)) ||
+          isNaN(minR) || minR < 0 ||
+          isNaN(maxR) || maxR <= minR
+        ) {
+          this.showToast(tb.invalidRange);
+          return;
+        }
+
+        const nums = c !== null ? [a, b, c] : [a, b];
+        const common = c !== null ? lcm3(a, b, c) : lcm(a, b);
+        const correctAnswers = getMultiplesInRange(common, minR, maxR, minR === 0);
+
+        // Ensure at least one valid multiple exists in range
+        const effectiveMax = correctAnswers.length > 0 ? maxR : Math.max(maxR, common * 2);
+        const finalAnswers =
+          correctAnswers.length > 0
+            ? correctAnswers
+            : getMultiplesInRange(common, minR, effectiveMax, minR === 0);
+
+        const pool = new Set(finalAnswers);
+        while (pool.size < Math.min(8, finalAnswers.length + 3)) {
+          const offset = (pool.size + 1) * Math.min(a, b);
+          const cand = (finalAnswers[0] || common) + offset;
+          if (cand % common !== 0) pool.add(cand);
+          else pool.add(cand + 1);
+        }
+
+        const numsLabelAr = nums.join(' و ');
+        const numsLabelLat = nums.join(', ');
+
+        const customQ = {
+          level: c !== null ? 4 : 2,
+          type: 'multi-select',
+          icon: '👨‍🏫',
+          numA: a,
+          numB: b,
+          tripleNums: c !== null ? nums : null,
+          gridMax: Math.min(60, effectiveMax),
+          prompt: {
+            ar: `تمرين الأستاذ: حدّد جميع المضاعفات المشتركة للأعداد (${numsLabelAr}) المحصورة بين ${minR} و ${effectiveMax} :`,
+            fr: `Exercice du Professeur : Sélectionne tous les multiples communs de (${numsLabelLat}) compris entre ${minR} et ${effectiveMax} :`,
+            en: `Teacher Exercise: Select all common multiples of (${numsLabelLat}) between ${minR} and ${effectiveMax}:`
+          },
+          options: Array.from(pool).sort((x, y) => x - y),
+          correctAnswers: finalAnswers,
+          stepHint: {
+            ar: `أصغر مضاعف مشترك مخالف للصفر للأعداد (${numsLabelAr}) هو ${common}. ابحث عن مضاعفات ${common} المحصورة بين ${minR} و ${effectiveMax}.`,
+            fr: `Le PPCM non nul de (${numsLabelLat}) est ${common}. Cherche les multiples de ${common} entre ${minR} et ${effectiveMax}.`,
+            en: `The non-zero LCM of (${numsLabelLat}) is ${common}. Find the multiples of ${common} between ${minR} and ${effectiveMax}.`
+          },
+          explanation: {
+            ar: `أصغر مضاعف مشترك مخالف للصفر هو ${common}، ومضاعفاته المحصورة بين ${minR} و ${effectiveMax} هي: (${finalAnswers.join(' ، ')}).`,
+            fr: `Le PPCM non nul est ${common}, et ses multiples entre ${minR} et ${effectiveMax} sont : (${finalAnswers.join(', ')}).`,
+            en: `The non-zero LCM is ${common}, and its multiples between ${minR} and ${effectiveMax} are: (${finalAnswers.join(', ')}).`
+          }
+        };
+
+        SoundFX.levelUp();
+        this.stopTimer();
+        this.state.questions = [customQ];
+        this.state.qIndex = 0;
+        this.state.score = 0;
+        this.state.streak = 0;
+        this.state.hearts = 3;
+        this.state.history = [];
+        this.state.screen = 'game';
+        this.resetQuestionState();
+        this.render();
+      },
+
+      printA4Worksheet() {
+        SoundFX.pop();
+        const lang = this.state.lang;
+        const ws = I18N[lang].worksheet;
+        const rng = () => Math.random();
+        const sampleQuestions = [
+          generateLevel1Question(rng, 0),
+          generateLevel1Question(rng, 1),
+          generateLevel2Question(rng, 0),
+          generateLevel3Question(rng, 0),
+          generateLevel3Question(rng, 2),
+          generateLevel4Question(rng, 0)
+        ];
+
+        const sheet = document.getElementById('print-worksheet');
+        if (!sheet) return;
+
+        sheet.innerHTML = `
+          <div style="font-family: 'Cairo', 'Nunito', sans-serif; direction: ${lang === 'ar' ? 'rtl' : 'ltr'}; padding: 8px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #C8102E; padding-bottom: 10px; margin-bottom: 12px;">
+              <div>
+                <h1 style="font-size: 20px; font-weight: 900; color: #1B2A4A; margin: 0;">${ws.headerTitle}</h1>
+                <p style="font-size: 12px; font-weight: 700; color: #334155; margin: 4px 0 0 0;">${ws.schoolLine}</p>
+              </div>
+              <div style="width: 64px; height: 64px; border-radius: 9999px; border: 2px solid #C8102E; overflow: hidden;">
+                ${this.getLogoMarkup('w-full h-full object-cover')}
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; margin-bottom: 12px;">
+              <div>${ws.studentField}</div>
+              <div>${ws.classField}</div>
+              <div>${ws.dateField}</div>
+              <div>${ws.scoreField}</div>
+            </div>
+
+            <p style="font-size: 12px; font-weight: 800; color: #C8102E; margin-bottom: 12px;">${ws.instructions}</p>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+              ${sampleQuestions
+                .map(
+                  (q, idx) => `
+                    <div class="print-avoid-break" style="border: 1.5px solid #94A3B8; border-radius: 10px; padding: 10px;">
+                      <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+                        ${idx + 1}) ${q.prompt[lang]}
+                      </div>
+                      <div style="font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 10px;">
+                        [ ${q.options.join('  •  ')} ]
+                      </div>
+                      <div style="border-top: 1px dashed #94A3B8; padding-top: 8px; font-size: 12px; font-weight: 700; color: #334155;">
+                        ${ws.answerSpace} ........................................................................................................................................
+                      </div>
+                    </div>
+                  `
+                )
+                .join('')}
+            </div>
+
+            <div style="margin-top: 14px; text-align: center; font-size: 11px; font-weight: 700; color: #475569;">
+              📘 ${FB_PAGE_SHORT_URL}
+            </div>
+          </div>
+        `;
+
+        setTimeout(() => {
+          window.print();
+        }, 120);
+      },
+
+      detectNearMiss(q, chosenArr) {
+        const lang = this.state.lang;
+        const nm = I18N[lang].nearMiss;
+        if (!chosenArr || chosenArr.length === 0) return null;
+
+        // 1. Picked 0 when non-zero was asked
+        if (q.type === 'single-choice' && chosenArr[0] === 0 && q.correctAnswer > 0) {
+          return nm.pickedZero;
+        }
+
+        // 2. Forgot remainder on Level 3 remainder word problem
+        if (
+          q.type === 'single-choice' &&
+          q.metaRemainder > 0 &&
+          chosenArr[0] === q.metaBaseMultiple
+        ) {
+          return nm.forgotRemainder
+            .replace('{base}', q.metaBaseMultiple)
+            .replace('{rem}', q.metaRemainder)
+            .replace('{expected}', q.correctAnswer);
+        }
+
+        // 3. Picked a common divisor instead of a common multiple
+        const nums = q.tripleNums || q.metaNums || (q.numA && q.numB ? [q.numA, q.numB] : null);
+        if (q.type === 'single-choice' && nums && chosenArr[0] > 0) {
+          const val = chosenArr[0];
+          const maxNum = Math.max(...nums);
+          if (val <= maxNum && nums.every((n) => n % val === 0)) {
+            return nm.pickedDivisor.replace('{val}', val);
+          }
+        }
+        return null;
+      },
+
+      submitAnswer(isTimeout = false) {
+        if (this.state.answered) return;
+        const lang = this.state.lang;
+        const q = this.state.questions[this.state.qIndex];
+
+        if (!isTimeout && this.state.selectedChoices.length === 0) {
+          this.showToast(I18N[lang].toastSelectOne);
+          return;
+        }
+
+        let isCorrect = false;
+        if (!isTimeout) {
+          if (q.type === 'multi-select') {
+            const sortedSel = [...this.state.selectedChoices].sort((a, b) => a - b);
+            const sortedCor = [...q.correctAnswers].sort((a, b) => a - b);
+            isCorrect =
+              sortedSel.length === sortedCor.length &&
+              sortedSel.every((v, i) => v === sortedCor[i]);
+          } else {
+            isCorrect = this.state.selectedChoices[0] === q.correctAnswer;
+          }
+        }
+
+        // 2-Team Steal Turn Mechanic when active team misses
+        if (
+          !isCorrect &&
+          !isTimeout &&
+          this.state.selectedMode === 'team' &&
+          !this.state.stealActive
+        ) {
+          SoundFX.wrong();
+          triggerHaptic([40, 40, 40]);
+          this.state.stealActive = true;
+          this.state.currentTeam = this.state.currentTeam === 'A' ? 'B' : 'A';
+          this.state.selectedChoices = [];
+          this.render();
+          return;
+        }
+
+        this.stopTimer();
+        this.state.answered = true;
+        this.state.isCorrect = isCorrect;
+        this.state.nearMissNote = isCorrect
+          ? null
+          : this.detectNearMiss(q, this.state.selectedChoices);
+
+        if (isCorrect) {
+          SoundFX.correct();
+          triggerHaptic(25);
+          this.state.streak += 1;
+          const bonus = this.state.selectedMode === 'challenge' ? Math.min(10, this.state.streak * 2) : 0;
+          const stealBonus = this.state.stealActive ? 15 : 0;
+          const gained = 10 + bonus + stealBonus;
+          this.state.score += gained;
+          if (this.state.selectedMode === 'team') {
+            this.state.teamScores[this.state.currentTeam] += gained;
+            if (this.state.stealActive) {
+              const teamLabel = this.state.currentTeam === 'A' ? I18N[lang].teamA : I18N[lang].teamB;
+              this.showToast(I18N[lang].teamEnhancements.stealSuccess.replace('{team}', teamLabel));
+            }
+          }
+          if (q.whyQuestion) {
+            this.state.awaitingWhy = true;
+          }
+          launchConfetti(30);
+        } else {
+          SoundFX.wrong();
+          triggerHaptic([60, 40, 60]);
+          this.state.streak = 0;
+          if (this.state.selectedMode === 'challenge') {
+            this.state.hearts = Math.max(0, this.state.hearts - 1);
+          }
+        }
+
+        const userDisplay =
+          this.state.selectedChoices.length > 0
+            ? [...this.state.selectedChoices].sort((a, b) => a - b).join(' ، ')
+            : '—';
+        const correctDisplay =
+          q.type === 'multi-select'
+            ? q.correctAnswers.join(' ، ')
+            : String(q.correctAnswer);
+
+        this.state.history.push({
+          question: q,
+          isCorrect,
+          userDisplay,
+          correctDisplay
+        });
+
+        this.render();
+      },
+
+      toggleBoardHighlight(which) {
+        SoundFX.pop();
+        if (which === 'A') this.state.highlightA = !this.state.highlightA;
+        if (which === 'B') this.state.highlightB = !this.state.highlightB;
+        this.render();
+      },
+
+      incrementScratch(idx) {
+        SoundFX.pop();
+        if (this.state.scratchCounts[idx] < 10) {
+          this.state.scratchCounts[idx] += 1;
+          this.render();
+        }
+      },
+
+      toggleHint(which) {
+        SoundFX.pop();
+        if (which === 'div') this.state.showDivHint = !this.state.showDivHint;
+        if (which === 'step') this.state.showStepHint = !this.state.showStepHint;
+        this.render();
+      },
+
+      renderLevel2Board(q) {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const { numA, numB, gridMax } = q;
+        const nums = Array.from({ length: gridMax + 1 }, (_, i) => i);
+        const seqA = Array.from({ length: this.state.scratchCounts[0] || 1 }, (_, i) => (i + 1) * numA);
+        const seqB = Array.from({ length: this.state.scratchCounts[1] || 1 }, (_, i) => (i + 1) * numB);
+
+        return `
+          <div class="rounded-2xl border-2 border-slate-200 bg-slate-50/70 p-3 sm:p-4 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs sm:text-sm font-black text-[#1B2A4A]">🎛️ ${t.boardTitle}</span>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button
+                  type="button"
+                  onclick="app.toggleBoardHighlight('A')"
+                  class="px-3 py-1.5 rounded-xl font-black text-xs border-2 transition-all ${
+                    this.state.highlightA
+                      ? 'bg-sky-500 text-white border-sky-600 shadow-xs'
+                      : 'bg-white text-sky-900 border-sky-200 hover:bg-sky-50'
+                  }"
+                >
+                  🔵 ${t.toggleA} ${numA}
+                </button>
+                <button
+                  type="button"
+                  onclick="app.toggleBoardHighlight('B')"
+                  class="px-3 py-1.5 rounded-xl font-black text-xs border-2 transition-all ${
+                    this.state.highlightB
+                      ? 'bg-amber-400 text-slate-950 border-amber-500 shadow-xs'
+                      : 'bg-white text-amber-900 border-amber-200 hover:bg-amber-50'
+                  }"
+                >
+                  🟡 ${t.toggleB} ${numB}
+                </button>
+                <span class="px-2.5 py-1 rounded-xl bg-emerald-100 text-emerald-950 border border-emerald-300 font-extrabold text-[11px]">
+                  🟢 ${t.commonLegend}
+                </span>
+              </div>
+            </div>
+
+            <!-- Responsive Number Grid -->
+            <div class="grid grid-cols-7 sm:grid-cols-10 gap-1 sm:gap-1.5" dir="ltr">
+              ${nums
+                .map((n) => {
+                  const isA = this.state.highlightA && n % numA === 0;
+                  const isB = this.state.highlightB && n % numB === 0;
+                  let cellCls = 'bg-white border-slate-200 text-slate-700';
+                  if (isA && isB) {
+                    cellCls = 'bg-emerald-500 border-emerald-600 text-white font-black scale-105 shadow-xs';
+                  } else if (isA) {
+                    cellCls = 'bg-sky-400 border-sky-500 text-white font-black';
+                  } else if (isB) {
+                    cellCls = 'bg-amber-300 border-amber-400 text-slate-950 font-black';
+                  }
+                  return `
+                    <div class="h-8 sm:h-9 rounded-lg border flex items-center justify-center text-xs sm:text-sm font-bold transition-all ${cellCls}">
+                      ${n}
+                    </div>
+                  `;
+                })
+                .join('')}
+            </div>
+
+            <!-- Interactive Skip-Counting Scratchpad -->
+            <div class="pt-2 border-t border-slate-200 space-y-2">
+              <div class="text-xs font-black text-[#1B2A4A]">✏️ ${t.scratchTitle}</div>
+              <div class="flex flex-wrap items-center gap-1.5" dir="ltr">
+                <button type="button" onclick="app.incrementScratch(0)" class="btn-tactile px-3 py-1.5 rounded-lg bg-sky-600 text-white font-black text-xs">
+                  +${numA}
+                </button>
+                ${seqA
+                  .map((v) => `<span class="px-2 py-0.5 rounded-md bg-sky-100 text-sky-950 font-black text-xs">${v}</span>`)
+                  .join('')}
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5" dir="ltr">
+                <button type="button" onclick="app.incrementScratch(1)" class="btn-tactile px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black text-xs">
+                  +${numB}
+                </button>
+                ${seqB
+                  .map((v) => `<span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-950 font-black text-xs">${v}</span>`)
+                  .join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      toggleOption(val) {
+        if (this.state.answered) return;
+        SoundFX.pop();
+        const q = this.state.questions[this.state.qIndex];
+        if (q.type === 'multi-select') {
+          const idx = this.state.selectedChoices.indexOf(val);
+          if (idx === -1) this.state.selectedChoices.push(val);
+          else this.state.selectedChoices.splice(idx, 1);
+        } else {
+          this.state.selectedChoices = [val];
+        }
+        this.render();
+      },
+
+      answerWhyQuestion(optIdx) {
+        if (this.state.whyAnswered) return;
+        const q = this.state.questions[this.state.qIndex];
+        const chosen = q.whyQuestion?.options?.[optIdx];
+        if (!chosen) return;
+
+        this.state.whyAnswered = true;
+        this.state.whySelectedIdx = optIdx;
+        this.state.awaitingWhy = false;
+
+        if (chosen.isCorrect) {
+          SoundFX.correct();
+          this.state.score += 5;
+          if (this.state.selectedMode === 'team') {
+            this.state.teamScores[this.state.currentTeam] += 5;
+          }
+          launchConfetti(35);
+        } else {
+          SoundFX.wrong();
+        }
+        this.render();
+      },
+
+      nextQuestion() {
+        SoundFX.pop();
+        if (
+          this.state.selectedMode === 'challenge' &&
+          this.state.hearts <= 0
+        ) {
+          this.finishSession();
+          return;
+        }
+
+        if (this.state.qIndex + 1 < this.state.questions.length) {
+          this.state.qIndex += 1;
+          if (this.state.selectedMode === 'team') {
+            this.state.currentTeam = this.state.currentTeam === 'A' ? 'B' : 'A';
+          }
+          this.resetQuestionState();
+          this.startTimerIfNeeded();
+          this.render();
+        } else {
+          this.finishSession();
+        }
+      },
+
+      finishSession() {
+        this.stopTimer();
+        SoundFX.levelUp();
+        launchConfetti(70);
+        this.state.screen = 'end';
+        this.render();
+        setTimeout(() => this.drawCertificateCanvas(), 60);
+      },
+
+      drawCertificateCanvas() {
+        const canvas = document.getElementById('cert-canvas');
+        if (!canvas) return;
+        const lang = this.state.lang;
+        const t = I18N[lang].endScreen;
+        const modeTitle = I18N[lang].modes[this.state.selectedMode]?.title || '';
+
+        const total = Math.max(1, this.state.history.length);
+        const correctCount = this.state.history.filter((h) => h.isCorrect).length;
+        const accuracy = Math.round((correctCount / total) * 100);
+        const studentName = this.state.studentName.trim() || t.defaultStudent;
+        const dateStr = new Date().toLocaleDateString(lang === 'ar' ? 'ar-TN' : lang === 'fr' ? 'fr-TN' : 'en-GB');
+
+        canvas.width = 1200;
+        canvas.height = 780;
+        const ctx = canvas.getContext('2d');
+
+        // Background Cream
+        ctx.fillStyle = '#FFFDF9';
+        ctx.fillRect(0, 0, 1200, 780);
+
+        // Double Decorative Border
+        ctx.strokeStyle = '#C8102E';
+        ctx.lineWidth = 14;
+        ctx.strokeRect(24, 24, 1152, 732);
+
+        ctx.strokeStyle = '#1B2A4A';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(46, 46, 1108, 688);
+
+        // Top Crimson Ribbon Header
+        ctx.fillStyle = '#1B2A4A';
+        ctx.fillRect(70, 70, 1060, 64);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '900 26px Cairo, Nunito, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('السنة السادسة نحو النموذجي  •  ' + I18N[lang].appTitle, 600, 111);
+
+        // Certificate Main Title
+        ctx.fillStyle = '#C8102E';
+        ctx.font = '900 46px Cairo, Nunito, sans-serif';
+        ctx.fillText('🏆 ' + t.certTitle + ' 🏆', 600, 330);
+
+        // Subtitle
+        ctx.fillStyle = '#334155';
+        ctx.font = '700 22px Cairo, Nunito, sans-serif';
+        ctx.fillText(t.certSubtitle, 600, 378);
+
+        // Student Name Banner
+        ctx.fillStyle = '#FFF1F2';
+        ctx.fillRect(220, 405, 760, 78);
+        ctx.strokeStyle = '#C8102E';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(220, 405, 760, 78);
+
+        ctx.fillStyle = '#1B2A4A';
+        ctx.font = '900 40px Cairo, Nunito, sans-serif';
+        ctx.fillText(studentName, 600, 457);
+
+        // Stats Row
+        ctx.fillStyle = '#0F172A';
+        ctx.font = '800 24px Cairo, Nunito, sans-serif';
+        const statsLine = `${t.modeLabel} ${modeTitle}   |   ${t.scoreLabel} ${this.state.score}   |   ${t.accuracyLabel} ${accuracy}%`;
+        ctx.fillText(statsLine, 600, 540);
+
+        // Date & Teacher Signature
+        ctx.fillStyle = '#475569';
+        ctx.font = '700 20px Cairo, Nunito, sans-serif';
+        ctx.fillText(`${t.dateLabel} ${dateStr}   •   ${this.state.teacherSignature}`, 600, 610);
+
+        // Facebook Page Footer on Certificate
+        ctx.fillStyle = '#0284C7';
+        ctx.font = '800 19px Nunito, Cairo, sans-serif';
+        ctx.fillText('📘 ' + FB_PAGE_SHORT_URL, 600, 668);
+
+        // Draw Circular Emblem at Top Center (y = 215)
+        const logoSrc = this.state.customLogoDataUrl || getDefaultCrestDataUrl();
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(600, 212, 66, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, 534, 146, 132, 132);
+          ctx.restore();
+
+          ctx.beginPath();
+          ctx.arc(600, 212, 66, 0, Math.PI * 2);
+          ctx.strokeStyle = '#C8102E';
+          ctx.lineWidth = 5;
+          ctx.stroke();
+
+          this.syncCertImgPreview();
+        };
+        img.onerror = () => {
+          this.syncCertImgPreview();
+        };
+        img.src = logoSrc;
+      },
+
+      syncCertImgPreview() {
+        const canvas = document.getElementById('cert-canvas');
+        const previewImg = document.getElementById('cert-img-preview');
+        if (!canvas || !previewImg) return;
+        try {
+          previewImg.src = canvas.toDataURL('image/png');
+        } catch (e) {}
+      },
+
+      downloadCertificatePNG() {
+        SoundFX.pop();
+        const canvas = document.getElementById('cert-canvas');
+        if (!canvas) return;
+        try {
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.download = `Certificat-Multiples-${Date.now()}.png`;
+          link.href = dataUrl;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (e) {
+          this.showToast(I18N[this.state.lang].endScreen.longPressHint);
+        }
+      },
+
+      copyFacebookScore() {
+        SoundFX.pop();
+        const lang = this.state.lang;
+        const total = Math.max(1, this.state.history.length);
+        const correctCount = this.state.history.filter((h) => h.isCorrect).length;
+        const accuracy = Math.round((correctCount / total) * 100);
+        const name = this.state.studentName.trim() || I18N[lang].endScreen.defaultStudent;
+
+        const caption =
+          lang === 'ar'
+            ? `🏆 أنا البطل(ة) ${name}، تحصلت على ${this.state.score} نقطة (دقّة ${accuracy}%) في «مغامرة المضاعفات المشتركة» على صفحة السنة السادسة نحو النموذجي! من يتحدّاني؟ 🇹🇳\n${FB_PAGE_URL}`
+            : lang === 'fr'
+            ? `🏆 Je suis ${name} et j'ai obtenu ${this.state.score} pts (${accuracy}% de précision) dans « L'Aventure des Multiples Communs » (6e année) ! Qui relève le défi ? 🇹🇳\n${FB_PAGE_URL}`
+            : `🏆 I'm ${name} and I scored ${this.state.score} pts (${accuracy}% accuracy) in Common Multiples Adventure! Who can beat my score? 🇹🇳\n${FB_PAGE_URL}`;
+
+        const ta = document.createElement('textarea');
+        ta.value = caption;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+        } catch (e) {}
+        document.body.removeChild(ta);
+        this.showToast(I18N[lang].toastCopied);
+      },
+
+      render() {
+        const root = document.getElementById('app-root');
+        if (!root) return;
+        if (this.state.screen === 'home') {
+          root.innerHTML = this.renderHomeScreen();
+        } else if (this.state.screen === 'game') {
+          root.innerHTML = this.renderGameScreen();
+        } else {
+          root.innerHTML = this.renderEndScreen();
+        }
+      },
+
+      renderHomeScreen() {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const tb = t.teacherBuilder;
+        const ws = t.worksheet;
+        const modeKeys = ['learn', 'challenge', 'team', 'daily'];
+        const modeIcons = { learn: '📘', challenge: '⚡', team: '🤝', daily: '📅' };
+
+        return `
+          <div class="space-y-5 animate-pop">
+            <!-- Hero Welcome Card -->
+            <section class="bg-white rounded-3xl p-5 sm:p-7 shadow-md border-2 border-[#C8102E]/20 text-center relative overflow-hidden">
+              <div class="flex flex-col items-center">
+                <a
+                  href="${FB_PAGE_URL}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="السنة السادسة نحو النموذجي"
+                  class="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-0.5 bg-[#FFFDF9] border-4 border-[#C8102E] shadow-lg overflow-hidden hover:scale-105 transition-transform mb-3 block"
+                >
+                  ${this.getLogoMarkup('w-full h-full object-cover rounded-full')}
+                </a>
+
+                <h2 class="text-2xl sm:text-3xl font-black text-[#1B2A4A] leading-tight">
+                  ${t.heroTitle}
+                </h2>
+                <p class="text-sm sm:text-base font-bold text-slate-600 max-w-2xl mt-2 leading-relaxed">
+                  ${applyMathBridge(t.heroSubtitle, lang)}
+                </p>
+
+                <div class="mt-3.5 flex flex-wrap items-center justify-center gap-2 smartboard-hide">
+                  <a
+                    href="${FB_PAGE_URL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#1877F2] hover:bg-blue-700 text-white font-black text-xs sm:text-sm shadow-sm transition-colors"
+                  >
+                    <span>${t.followFbBtn}</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Student Name Input -->
+              <div class="max-w-md mx-auto mt-5 text-start">
+                <label for="student-name-input" class="block text-xs sm:text-sm font-extrabold text-[#1B2A4A] mb-1.5">
+                  🎓 ${t.studentNameLabel}
+                </label>
+                <input
+                  id="student-name-input"
+                  type="text"
+                  value="${this.state.studentName.replace(/"/g, '&quot;')}"
+                  oninput="app.updateStudentName(this.value)"
+                  placeholder="${t.studentNamePlaceholder}"
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-bold text-sm sm:text-base bg-[#FFFDF9]"
+                />
+              </div>
+            </section>
+
+            <!-- Step 1: Select Game Mode -->
+            <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-slate-200/80">
+              <h3 class="text-base sm:text-lg font-black text-[#1B2A4A] mb-3.5">${t.chooseMode}</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${modeKeys
+                  .map((mKey) => {
+                    const active = this.state.selectedMode === mKey;
+                    const info = t.modes[mKey];
+                    return `
+                      <button
+                        type="button"
+                        onclick="app.selectMode('${mKey}')"
+                        class="btn-tactile p-4 rounded-2xl border-2 text-start transition-all flex items-start gap-3 ${
+                          active
+                            ? 'border-[#C8102E] bg-rose-50/70 shadow-sm ring-2 ring-[#C8102E]/20'
+                            : 'border-slate-200 bg-[#FFFDF9] hover:border-slate-300'
+                        }"
+                      >
+                        <span class="text-2xl flex-shrink-0 mt-0.5">${modeIcons[mKey]}</span>
+                        <div>
+                          <div class="font-black text-sm sm:text-base text-[#1B2A4A]">${info.title}</div>
+                          <div class="text-xs font-bold text-slate-600 mt-0.5 leading-snug">${info.desc}</div>
+                        </div>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+              </div>
+            </section>
+
+            <!-- Step 2: Launch Full Adventure or Select Level -->
+            <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-slate-200/80">
+              <h3 class="text-base sm:text-lg font-black text-[#1B2A4A] mb-3.5">${t.chooseLevel}</h3>
+
+              <button
+                type="button"
+                onclick="app.startGame(null)"
+                class="btn-tactile w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#C8102E] via-[#B30E29] to-[#1B2A4A] hover:opacity-95 text-white font-black text-base sm:text-lg shadow-lg shadow-[#C8102E]/20 flex items-center justify-center gap-2.5 mb-4"
+              >
+                <span>🚀</span>
+                <span>${t.startAllBtn}</span>
+              </button>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${t.levels
+                  .map(
+                    (lvl, idx) => `
+                      <button
+                        type="button"
+                        onclick="app.startGame(${lvl.id})"
+                        class="btn-tactile p-3.5 rounded-2xl border-2 border-slate-200 hover:border-[#C8102E] bg-[#FFFDF9] hover:bg-rose-50/40 text-start flex items-center gap-3 transition-colors"
+                      >
+                        <span class="w-9 h-9 rounded-xl bg-[#1B2A4A] text-white font-black flex items-center justify-center flex-shrink-0 shadow-sm">
+                          ${idx + 1}
+                        </span>
+                        <span class="font-extrabold text-xs sm:text-sm text-[#1B2A4A] leading-snug">${lvl.name}</span>
+                      </button>
+                    `
+                  )
+                  .join('')}
+              </div>
+
+              <!-- Teacher Tools Row: Custom Board Exercise Builder + A4 Worksheet Print -->
+              <div class="mt-4 pt-4 border-t border-slate-200/80 flex flex-col sm:flex-row gap-2.5 smartboard-hide">
+                <button
+                  type="button"
+                  onclick="app.toggleTeacherBuilder()"
+                  class="btn-tactile flex-1 py-3 px-4 rounded-2xl bg-[#1B2A4A] hover:bg-slate-800 text-white font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2"
+                >
+                  <span>${tb.toggleTitle}</span>
+                  <span>${this.state.showTeacherBuilder ? '▲' : '▼'}</span>
+                </button>
+                <button
+                  type="button"
+                  onclick="app.printA4Worksheet()"
+                  class="btn-tactile py-3 px-4 rounded-2xl bg-[#FFFDF9] hover:bg-rose-50 text-[#C8102E] border-2 border-[#C8102E]/40 font-black text-xs sm:text-sm flex items-center justify-center gap-2"
+                >
+                  <span>${ws.printBtn}</span>
+                </button>
+              </div>
+
+              <!-- Collapsible Teacher Custom Exercise Builder Panel -->
+              ${
+                this.state.showTeacherBuilder
+                  ? `<div class="mt-3 p-4 rounded-2xl bg-slate-50 border-2 border-[#1B2A4A]/20 space-y-3 animate-pop smartboard-hide">
+                      <p class="text-xs sm:text-sm font-bold text-slate-600">${tb.toggleSub}</p>
+                      <div class="grid grid-cols-3 gap-2">
+                        <div>
+                          <label class="block text-[11px] font-black text-[#1B2A4A] mb-1">${tb.numALabel}</label>
+                          <input type="number" min="2" max="200" value="${this.state.teacherCustom.numA}" oninput="app.updateTeacherCustomField('numA', this.value)" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-black text-sm bg-white" />
+                        </div>
+                        <div>
+                          <label class="block text-[11px] font-black text-[#1B2A4A] mb-1">${tb.numBLabel}</label>
+                          <input type="number" min="2" max="200" value="${this.state.teacherCustom.numB}" oninput="app.updateTeacherCustomField('numB', this.value)" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-black text-sm bg-white" />
+                        </div>
+                        <div>
+                          <label class="block text-[11px] font-black text-[#1B2A4A] mb-1">${tb.numCLabel}</label>
+                          <input type="number" min="2" max="200" placeholder="—" value="${this.state.teacherCustom.numC}" oninput="app.updateTeacherCustomField('numC', this.value)" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-black text-sm bg-white" />
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-2 gap-2">
+                        <div>
+                          <label class="block text-[11px] font-black text-[#1B2A4A] mb-1">${tb.minLabel}</label>
+                          <input type="number" min="0" max="5000" value="${this.state.teacherCustom.minR}" oninput="app.updateTeacherCustomField('minR', this.value)" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-black text-sm bg-white" />
+                        </div>
+                        <div>
+                          <label class="block text-[11px] font-black text-[#1B2A4A] mb-1">${tb.maxLabel}</label>
+                          <input type="number" min="1" max="10000" value="${this.state.teacherCustom.maxR}" oninput="app.updateTeacherCustomField('maxR', this.value)" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#C8102E] focus:outline-none font-black text-sm bg-white" />
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onclick="app.launchTeacherCustomExercise()"
+                        class="btn-tactile w-full py-3 px-4 rounded-xl bg-[#C8102E] hover:bg-[#9F0D24] text-white font-black text-xs sm:text-sm shadow-md"
+                      >
+                        ${tb.launchBtn}
+                      </button>
+                    </div>`
+                  : ''
+              }
+            </section>
+          </div>
+        `;
+      },
+
+      renderGameScreen() {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const q = this.state.questions[this.state.qIndex];
+        if (!q) return '';
+
+        const totalQ = this.state.questions.length;
+        const progressPct = Math.round(((this.state.qIndex + 1) / totalQ) * 100);
+        const levelInfo = t.levels.find((l) => l.id === q.level) || t.levels[0];
+        const isLast = this.state.qIndex + 1 >= totalQ || (this.state.selectedMode === 'challenge' && this.state.hearts <= 0);
+
+        return `
+          <div class="space-y-4 animate-pop">
+            <!-- Top HUD Bar -->
+            <section class="bg-white rounded-3xl p-3.5 sm:p-4 shadow-sm border border-slate-200 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onclick="app.goHome()"
+                  class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1B2A4A] font-extrabold text-xs sm:text-sm"
+                >
+                  🏠 ${t.homeBtn}
+                </button>
+
+                <span class="px-3 py-1 rounded-full bg-rose-50 text-[#C8102E] border border-[#C8102E]/25 font-black text-xs sm:text-sm">
+                  ${levelInfo.name}
+                </span>
+
+                <div class="flex items-center gap-2 font-black text-xs sm:text-sm">
+                  ${
+                    this.state.selectedMode === 'challenge'
+                      ? `<span class="px-2.5 py-1 rounded-xl bg-rose-50 text-[#C8102E] border border-rose-200">${'❤️'.repeat(this.state.hearts)}${'🤍'.repeat(3 - this.state.hearts)}</span>
+                         <span id="challenge-timer" class="px-2.5 py-1 rounded-xl bg-amber-100 text-amber-950 font-black">⏱️ ${this.state.timeLeft}s</span>`
+                      : ''
+                  }
+                  ${
+                    this.state.selectedMode === 'team'
+                      ? `<span class="px-2.5 py-1 rounded-xl bg-blue-100 text-blue-950">${t.teamA}: ${this.state.teamScores.A}</span>
+                         <span class="px-2.5 py-1 rounded-xl bg-teal-100 text-teal-950">${t.teamB}: ${this.state.teamScores.B}</span>`
+                      : `<span class="px-3 py-1 rounded-xl bg-[#1B2A4A] text-white">${t.scoreLabel} ${this.state.score}</span>`
+                  }
+                </div>
+              </div>
+
+              ${
+                this.state.selectedMode === 'team'
+                  ? `<div class="text-center py-1.5 px-3 rounded-xl font-black text-sm transition-all ${
+                      this.state.stealActive
+                        ? 'bg-amber-400 text-slate-950 ring-2 ring-[#C8102E] animate-pulse'
+                        : this.state.currentTeam === 'A'
+                        ? 'bg-blue-100 text-blue-950'
+                        : 'bg-teal-100 text-teal-950'
+                    }">
+                      ${
+                        this.state.stealActive
+                          ? t.teamEnhancements.stealBanner.replace(
+                              '{team}',
+                              this.state.currentTeam === 'A' ? t.teamA : t.teamB
+                            )
+                          : `🎯 ${t.turnOf} ${this.state.currentTeam === 'A' ? t.teamA : t.teamB}`
+                      }
+                    </div>`
+                  : ''
+              }
+
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-slate-600 whitespace-nowrap">${t.qProgress} ${this.state.qIndex + 1}/${totalQ}</span>
+                <div class="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-[#C8102E] to-[#0284C7] transition-all duration-300" style="width: ${progressPct}%"></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Main Question Card -->
+            <section class="bg-white rounded-3xl p-4 sm:p-6 shadow-md border-2 border-slate-200/80 space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="text-3xl sm:text-4xl flex-shrink-0">${q.icon || '🔢'}</span>
+                <h2 class="text-base sm:text-xl font-black text-[#1B2A4A] leading-relaxed">
+                  ${applyMathBridge(q.prompt[lang], lang)}
+                </h2>
+              </div>
+
+              <!-- Optional Pedagogical Hint Toggles -->
+              <div class="flex flex-wrap gap-2">
+                ${
+                  q.divHint
+                    ? `<button type="button" onclick="app.toggleHint('div')" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 font-extrabold text-xs sm:text-sm">
+                        ${t.divHintBtn}
+                      </button>`
+                    : ''
+                }
+                ${
+                  q.stepHint
+                    ? `<button type="button" onclick="app.toggleHint('step')" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-950 border border-sky-300 font-extrabold text-xs sm:text-sm">
+                        ${t.stepHintBtn}
+                      </button>`
+                    : ''
+                }
+              </div>
+
+              ${
+                this.state.showDivHint && q.divHint
+                  ? `<div class="p-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm font-bold animate-pop">
+                      ${applyMathBridge(q.divHint[lang], lang)}
+                    </div>`
+                  : ''
+              }
+
+              ${
+                this.state.showStepHint && q.stepHint
+                  ? `<div class="p-3 rounded-2xl bg-sky-50 border border-sky-300 text-sky-950 text-xs sm:text-sm font-bold animate-pop">
+                      ${applyMathBridge(q.stepHint[lang], lang)}
+                    </div>`
+                  : ''
+              }
+
+              <!-- Level 2 Interactive Intersection Board & Skip-Counter -->
+              ${q.level === 2 ? this.renderLevel2Board(q) : ''}
+
+              <!-- Level 4 3-Number Skip-Counter Helper -->
+              ${q.level === 4 && q.tripleNums ? this.renderTripleSkipCounter(q.tripleNums) : ''}
+
+              <!-- Interactive Step-by-Step PPCM/LCM Multiplier Ladder (Levels 2 & 4) -->
+              ${q.level === 2 || q.level === 4 ? this.renderPpcmLadder(q) : ''}
+
+              <!-- Answer Choices Grid -->
+              ${this.renderQuestionChoices(q)}
+
+              <!-- Anti-Guessing "Why?" Check on Level 3 Word Problems -->
+              ${
+                this.state.answered && this.state.isCorrect && q.whyQuestion
+                  ? this.renderWhyCheck(q.whyQuestion)
+                  : ''
+              }
+
+              <!-- Feedback & Detailed Solution after Answering -->
+              ${
+                this.state.answered
+                  ? `<div class="p-4 rounded-2xl border-2 animate-pop space-y-2 ${
+                      this.state.isCorrect
+                        ? 'bg-emerald-50 border-emerald-400 text-emerald-950'
+                        : 'bg-rose-50 border-rose-400 text-rose-950'
+                    }">
+                      <p class="font-black text-sm sm:text-base">
+                        ${
+                          this.state.selectedChoices.length === 0
+                            ? `⏰ ${t.timeUpFeedback}`
+                            : this.state.isCorrect
+                            ? `🎉 ${t.correctFeedback}`
+                            : `💡 ${t.wrongFeedback}`
+                        }
+                      </p>
+                      ${
+                        this.state.nearMissNote
+                          ? `<div class="p-2.5 rounded-xl bg-amber-100/90 border border-amber-400 text-amber-950 text-xs sm:text-sm font-extrabold">
+                              🎯 ${this.state.nearMissNote}
+                            </div>`
+                          : ''
+                      }
+                      <p class="text-xs sm:text-sm font-bold leading-relaxed">
+                        ${applyMathBridge(q.explanation[lang], lang)}
+                      </p>
+                    </div>`
+                  : ''
+              }
+
+              <!-- Submit or Next Action Button -->
+              <div class="pt-1">
+                ${
+                  !this.state.answered
+                    ? `<button
+                        type="button"
+                        onclick="app.submitAnswer(false)"
+                        class="btn-tactile w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#C8102E] to-[#1B2A4A] hover:opacity-95 text-white font-black text-base sm:text-lg shadow-lg"
+                      >
+                        ${t.submitBtn}
+                      </button>`
+                    : !this.state.awaitingWhy
+                    ? `<button
+                        type="button"
+                        onclick="app.nextQuestion()"
+                        class="btn-tactile w-full py-4 px-6 rounded-2xl bg-[#10B981] hover:bg-emerald-600 text-white font-black text-base sm:text-lg shadow-lg"
+                      >
+                        ${isLast ? t.finishBtn : t.nextBtn}
+                      </button>`
+                    : ''
+                }
+              </div>
+            </section>
+          </div>
+        `;
+      },
+
+      renderQuestionChoices(q) {
+        const isMulti = q.type === 'multi-select';
+        const colsClass = q.options.length > 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2';
+
+        return `
+          <div class="grid ${colsClass} gap-2.5 sm:gap-3" dir="ltr">
+            ${q.options
+              .map((opt) => {
+                const isSelected = this.state.selectedChoices.includes(opt);
+                const isRightVal = isMulti
+                  ? q.correctAnswers.includes(opt)
+                  : opt === q.correctAnswer;
+
+                let btnStyle =
+                  'border-slate-200 bg-[#FFFDF9] hover:border-[#0284C7] text-[#1B2A4A]';
+                if (!this.state.answered && isSelected) {
+                  btnStyle =
+                    'border-[#C8102E] bg-rose-50 text-[#C8102E] ring-2 ring-[#C8102E]/25';
+                } else if (this.state.answered) {
+                  if (isRightVal) {
+                    btnStyle =
+                      'border-emerald-500 bg-emerald-100 text-emerald-950 ring-2 ring-emerald-400/40';
+                  } else if (isSelected && !isRightVal) {
+                    btnStyle =
+                      'border-rose-500 bg-rose-100 text-rose-950 animate-shake';
+                  } else {
+                    btnStyle = 'border-slate-200 bg-slate-50 text-slate-400';
+                  }
+                }
+
+                return `
+                  <button
+                    type="button"
+                    ${this.state.answered ? 'disabled' : ''}
+                    onclick="app.toggleOption(${opt})"
+                    class="btn-tactile py-3.5 px-4 rounded-2xl border-2 font-black text-lg sm:text-xl shadow-xs flex items-center justify-center gap-2 ${btnStyle}"
+                  >
+                    <span>${opt}</span>
+                    ${
+                      this.state.answered && isRightVal
+                        ? '<span class="text-sm">✅</span>'
+                        : this.state.answered && isSelected && !isRightVal
+                        ? '<span class="text-sm">❌</span>'
+                        : ''
+                    }
+                  </button>
+                `;
+              })
+              .join('')}
+          </div>
+        `;
+      },
+
+      renderWhyCheck(whyQ) {
+        const lang = this.state.lang;
+        return `
+          <div class="p-4 rounded-2xl bg-indigo-50 border-2 border-indigo-300 space-y-2.5 animate-pop">
+            <p class="font-black text-xs sm:text-sm text-indigo-950">
+              🧠 ${applyMathBridge(whyQ.prompt[lang], lang)}
+            </p>
+            <div class="space-y-2">
+              ${whyQ.options
+                .map((opt, idx) => {
+                  let cls = 'bg-white border-indigo-200 hover:border-indigo-400 text-slate-800';
+                  if (this.state.whyAnswered) {
+                    if (opt.isCorrect) {
+                      cls = 'bg-emerald-100 border-emerald-500 text-emerald-950';
+                    } else if (idx === this.state.whySelectedIdx) {
+                      cls = 'bg-rose-100 border-rose-500 text-rose-950';
+                    }
+                  }
+                  return `
+                    <button
+                      type="button"
+                      ${this.state.whyAnswered ? 'disabled' : ''}
+                      onclick="app.answerWhyQuestion(${idx})"
+                      class="btn-tactile w-full p-3 rounded-xl border-2 text-start font-bold text-xs sm:text-sm transition-colors ${cls}"
+                    >
+                      ${applyMathBridge(opt[lang], lang)}
+                    </button>
+                  `;
+                })
+                .join('')}
+            </div>
+          </div>
+        `;
+      },
+      togglePpcmLadder() {
+        SoundFX.pop();
+        this.state.showPpcmLadder = !this.state.showPpcmLadder;
+        this.render();
+      },
+
+      renderPpcmLadder(q) {
+        const lang = this.state.lang;
+        const pl = I18N[lang].ppcmLadder;
+        const nums = q.tripleNums || (q.numA && q.numB ? [q.numA, q.numB] : null);
+        if (!nums) return '';
+
+        const maxNum = Math.max(...nums);
+        const others = nums.filter((n) => n !== maxNum);
+        const targetLcm = nums.length === 3 ? lcm3(nums[0], nums[1], nums[2]) : lcm(nums[0], nums[1]);
+
+        const rows = [];
+        for (let k = 1; k <= 12; k++) {
+          const val = maxNum * k;
+          const checks = others.map((d) => ({
+            d,
+            ok: val % d === 0
+          }));
+          const allOk = checks.every((c) => c.ok);
+          rows.push({ k, val, checks, allOk });
+          if (allOk) break;
+        }
+
+        return `
+          <div class="rounded-2xl border-2 border-indigo-200 bg-indigo-50/60 p-3 space-y-2.5">
+            <button
+              type="button"
+              onclick="app.togglePpcmLadder()"
+              class="w-full flex items-center justify-between text-start font-black text-xs sm:text-sm text-indigo-950"
+            >
+              <span>${pl.toggleBtn}</span>
+              <span class="px-2 py-0.5 rounded-lg bg-white border border-indigo-200 text-xs">
+                ${this.state.showPpcmLadder ? '▲' : '▼'}
+              </span>
+            </button>
+
+            ${
+              this.state.showPpcmLadder
+                ? `<div class="space-y-2 pt-1 animate-pop">
+                    <p class="text-xs font-bold text-slate-700">
+                      ${pl.subtitle.replace('{max}', maxNum)}
+                    </p>
+                    <div class="space-y-1.5">
+                      ${rows
+                        .map(
+                          (r) => `
+                            <div class="p-2 rounded-xl border flex flex-wrap items-center justify-between gap-2 text-xs font-extrabold ${
+                              r.allOk
+                                ? 'bg-emerald-100 border-emerald-500 text-emerald-950'
+                                : 'bg-white border-slate-200 text-slate-800'
+                            }">
+                              <span dir="ltr" class="font-black">
+                                ${pl.stepRow
+                                  .replace('{max}', maxNum)
+                                  .replace('{k}', r.k)
+                                  .replace('{val}', r.val)}
+                              </span>
+                              <div class="flex flex-wrap items-center gap-1.5">
+                                ${r.checks
+                                  .map((c) =>
+                                    c.ok
+                                      ? `<span class="px-2 py-0.5 rounded-md bg-emerald-200/80 text-emerald-950">${pl.divYes.replace('{d}', c.d)}</span>`
+                                      : `<span class="px-2 py-0.5 rounded-md bg-rose-100 text-rose-900">${pl.divNo.replace('{d}', c.d)}</span>`
+                                  )
+                                  .join('')}
+                                ${
+                                  r.allOk
+                                    ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-black">${pl.foundBadge.replace('{lcm}', targetLcm)}</span>`
+                                    : ''
+                                }
+                              </div>
+                            </div>
+                          `
+                        )
+                        .join('')}
+                    </div>
+                  </div>`
+                : ''
+            }
+          </div>
+        `;
+      },
+
+      renderTripleSkipCounter(nums) {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const chipStyles = [
+          'bg-sky-100 text-sky-950',
+          'bg-amber-100 text-amber-950',
+          'bg-purple-100 text-purple-950'
+        ];
+        const btnStyles = [
+          'bg-sky-600 text-white',
+          'bg-amber-500 text-slate-950',
+          'bg-purple-600 text-white'
+        ];
+
+        return `
+          <div class="rounded-2xl border-2 border-slate-200 bg-slate-50/80 p-3 space-y-2">
+            <div class="text-xs font-black text-[#1B2A4A]">✏️ ${t.scratchTitle}</div>
+            ${nums
+              .map((num, idx) => {
+                const count = this.state.scratchCounts[idx] || 1;
+                const seq = Array.from({ length: count }, (_, i) => (i + 1) * num);
+                return `
+                  <div class="flex flex-wrap items-center gap-1.5" dir="ltr">
+                    <button type="button" onclick="app.incrementScratch(${idx})" class="btn-tactile px-3 py-1.5 rounded-lg font-black text-xs ${btnStyles[idx % 3]}">
+                      +${num}
+                    </button>
+                    ${seq
+                      .map((v) => `<span class="px-2 py-0.5 rounded-md font-black text-xs ${chipStyles[idx % 3]}">${v}</span>`)
+                      .join('')}
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        `;
+      },
+
+      renderEndScreen() {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const es = t.endScreen;
+        const te = t.teamEnhancements;
+        const mistakes = this.state.history.filter((h) => !h.isCorrect);
+
+        const scoreA = this.state.teamScores.A;
+        const scoreB = this.state.teamScores.B;
+        const isTie = scoreA === scoreB;
+        const winnerName = scoreA > scoreB ? t.teamA : t.teamB;
+        const winnerScore = Math.max(scoreA, scoreB);
+        const runnerName = scoreA > scoreB ? t.teamB : t.teamA;
+        const runnerScore = Math.min(scoreA, scoreB);
+
+        return `
+          <div class="space-y-5 animate-pop">
+            ${
+              this.state.selectedMode === 'team'
+                ? `<section class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border-2 border-amber-400 text-center space-y-4">
+                    <h3 class="text-lg sm:text-xl font-black text-[#1B2A4A]">${te.podiumTitle}</h3>
+                    ${
+                      isTie
+                        ? `<div class="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 font-black text-base sm:text-lg text-amber-950">
+                            🤝 ${te.tieLabel} (${scoreA} — ${scoreB})
+                          </div>`
+                        : `<div class="grid grid-cols-2 gap-3 items-end max-w-md mx-auto pt-2">
+                            <div class="p-4 rounded-2xl bg-gradient-to-b from-amber-200 to-amber-100 border-2 border-amber-500 shadow-sm">
+                              <div class="text-2xl mb-1">🥇</div>
+                              <div class="text-[11px] font-black text-amber-900">${te.winnerLabel}</div>
+                              <div class="text-base sm:text-lg font-black text-[#1B2A4A]">${winnerName}</div>
+                              <div class="text-xl font-black text-[#C8102E] mt-1">${winnerScore} pts</div>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-slate-100 border-2 border-slate-300">
+                              <div class="text-xl mb-1">🥈</div>
+                              <div class="text-[11px] font-black text-slate-600">${te.runnerUpLabel}</div>
+                              <div class="text-sm sm:text-base font-black text-[#1B2A4A]">${runnerName}</div>
+                              <div class="text-lg font-black text-slate-700 mt-1">${runnerScore} pts</div>
+                            </div>
+                          </div>`
+                    }
+                  </section>`
+                : ''
+            }
+
+            <!-- Certificate Card -->
+            <section class="bg-white rounded-3xl p-4 sm:p-6 shadow-md border-2 border-[#C8102E]/25 space-y-4 text-center">
+              <h2 class="text-xl sm:text-2xl font-black text-[#1B2A4A]">🏆 ${es.title}</h2>
+
+              <!-- Hidden High-Res Canvas + Long-Pressable Preview Image -->
+              <canvas id="cert-canvas" class="hidden"></canvas>
+              <div class="rounded-2xl overflow-hidden border-2 border-[#C8102E] shadow-lg bg-[#FFFDF9]">
+                <img
+                  id="cert-img-preview"
+                  alt="${es.certTitle}"
+                  class="w-full h-auto block select-all"
+                />
+              </div>
+              <p class="text-xs font-bold text-slate-500">${es.longPressHint}</p>
+
+              <!-- Share & Download Action Buttons -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  onclick="app.downloadCertificatePNG()"
+                  class="btn-tactile py-3.5 px-5 rounded-2xl bg-[#C8102E] hover:bg-[#9F0D24] text-white font-black text-sm sm:text-base shadow-md"
+                >
+                  ${es.downloadPng}
+                </button>
+                <button
+                  type="button"
+                  onclick="app.copyFacebookScore()"
+                  class="btn-tactile py-3.5 px-5 rounded-2xl bg-[#1B2A4A] hover:bg-slate-800 text-white font-black text-sm sm:text-base shadow-md"
+                >
+                  ${es.copyFb}
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <a
+                  href="${FB_PAGE_URL}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-tactile py-3.5 px-5 rounded-2xl bg-[#1877F2] hover:bg-blue-700 text-white font-black text-sm sm:text-base shadow-sm flex items-center justify-center"
+                >
+                  ${es.openFbPage}
+                </a>
+                <button
+                  type="button"
+                  onclick="app.goHome()"
+                  class="btn-tactile py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm sm:text-base shadow-sm"
+                >
+                  ${es.playAgain}
+                </button>
+              </div>
+            </section>
+
+            <!-- Mistake Review Section -->
+            <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-slate-200 space-y-3.5">
+              <h3 class="text-base sm:text-lg font-black text-[#1B2A4A]">📝 ${es.mistakeTitle}</h3>
+              ${
+                mistakes.length === 0
+                  ? `<div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-950 font-black text-sm sm:text-base text-center">
+                      ${es.noMistakes}
+                    </div>`
+                  : `<div class="space-y-3">
+                      ${mistakes
+                        .map(
+                          (m, i) => `
+                            <div class="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-1.5 text-xs sm:text-sm">
+                              <div class="font-black text-[#1B2A4A]">
+                                ${i + 1}. ${applyMathBridge(m.question.prompt[lang], lang)}
+                              </div>
+                              <div class="font-bold text-rose-800">
+                                ❌ ${es.yourAns} <span dir="ltr">${m.userDisplay}</span>
+                              </div>
+                              <div class="font-bold text-emerald-800">
+                                ✅ ${es.correctAns} <span dir="ltr">${m.correctDisplay}</span>
+                              </div>
+                              <div class="font-bold text-slate-700 pt-1">
+                                💡 ${es.explanation} ${applyMathBridge(m.question.explanation[lang], lang)}
+                              </div>
+                            </div>
+                          `
+                        )
+                        .join('')}
+                    </div>`
+              }
+            </section>
+          </div>
+        `;
+      }
+    };
+
+    window.onload = function () {
+      app.init();
+    };
+  </script>
+</body>
+</html>
