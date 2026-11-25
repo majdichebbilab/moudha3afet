@@ -6,6 +6,9 @@
   <meta name="theme-color" content="#C8102E" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta property="og:title" content="مغامرة المضاعفات المشتركة | السنة السادسة نحو النموذجي" />
+  <meta property="og:description" content="لعبة تفاعلية لتلاميذ السنة السادسة أساسي في المضاعفات المشتركة وأصغر مضاعف مشترك مخالف للصفر استعداداً لمناظرة الدخول إلى الإعداديات النموذجية." />
+  <meta property="og:type" content="website" />
   <title>مغامرة المضاعفات المشتركة | السنة السادسة نحو النموذجي</title>
   <!-- Google Fonts: Cairo (Arabic) & Nunito (French/English) with graceful fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -481,7 +484,7 @@
      */
     const OWNER_ADMIN_PIN = '2026';
     const OFFICIAL_REPO_LOGO = ''; // Optional: Paste Data URL here for permanent GitHub lock
-    const REPO_LOGO_FILES = ['./logo.png', './logo.jpg', './logo.webp'];
+    const REPO_LOGO_FILES = ['./logo.png', './logo.jpg', './logo.png.jpg', './logo.webp'];
     const CUSTOM_LOGO_STORAGE_KEY = 'sma_owner_logo_v1';
     const TEACHER_SIG_STORAGE_KEY = 'sma_owner_sig_v1';
     const FB_PAGE_URL = 'https://www.facebook.com/profile.php?id=100063621936512';
@@ -825,6 +828,12 @@
         },
         chooseLevel: '2. ابدأ المغامرة أو اختر مستوى محدّداً:',
         startAllBtn: 'ابدأ المغامرة الكاملة (المستويات 1 ← 4)',
+        fbPostBox: {
+          title: '📣 وصف جاهز لنشر اللعبة على فيسبوك',
+          copyBtn: '📋 نسخ وصف المنشور',
+          copiedToast: 'تمّ نسخ وصف منشور الفيسبوك بنجاح!',
+          text: `🧮✨ لعبة «مغامرة المضاعفات المشتركة» لتلاميذ السنة السادسة أساسي (استعداداً لمناظرة الدخول إلى الإعداديات النموذجية)!\n\n🎯 ما الذي ينتظر أبطالنا؟\n• 4 مستويات متدرّجة: صائد المضاعفات والحصر، لوحة التقاطع والمسودة الذكية، وضعيات إدماجية مع تعليل «لماذا؟»، وتحدّي النموذجي (3 أعداد).\n• 4 أنماط لعب: وضع التعلّم، وضع التحدّي، تحدّي الفريقين في القسم، وتحدّي اليوم الموحّد.\n• دعم ثلاث لغات (العربية / الفرنسية / الإنجليزية) + وضع السبورة.\n• شهادة تقدير باسم التلميذ(ة) قابلة للحفظ كصورة (PNG) لمشاركتها في التعليقات!\n\n👇 جرّب الآن واكتب نتيجتك في التعليقات:\n${FB_PAGE_URL}`
+        },
         levels: [
           { id: 1, name: 'المستوى 1: صائد المضاعفات والحصر' },
           { id: 2, name: 'المستوى 2: لوحة التقاطع والمسودة الذكية' },
@@ -955,6 +964,12 @@
         },
         chooseLevel: "2. Lance l'aventure ou choisis un niveau :",
         startAllBtn: "Commencer l'Aventure Complète (Niveaux 1 → 4)",
+        fbPostBox: {
+          title: '📣 Description prête pour publier sur Facebook',
+          copyBtn: '📋 Copier la description',
+          copiedToast: 'Description Facebook copiée !',
+          text: `🧮✨ Jeu interactif « L'Aventure des Multiples Communs » pour les élèves de 6e année primaire (préparation au concours des collèges pilotes) !\n\n🎯 Au programme :\n• 4 niveaux progressifs : Chasseur de multiples, Grille & brouillon intelligent, Problèmes avec justification, et Défi Pilote (3 nombres).\n• 4 modes : Apprentissage, Défi, 2 Équipes en classe, et Défi du Jour.\n• Multilingue (AR / FR / EN) avec infobulles bilingues + Mode Tableau.\n• Certificat nominatif téléchargeable en PNG à partager en commentaire !\n\n👇 Teste le jeu et partage ton score en commentaire :\n${FB_PAGE_URL}`
+        },
         levels: [
           { id: 1, name: 'Niveau 1 : Chasseur de Multiples & Encadrement' },
           { id: 2, name: 'Niveau 2 : Grille Interactive & Brouillon Intelligent' },
@@ -1085,6 +1100,12 @@
         },
         chooseLevel: '2. Launch Adventure or Pick a Level:',
         startAllBtn: 'Start Full Adventure (Levels 1 → 4)',
+        fbPostBox: {
+          title: '📣 Ready-to-Post Facebook Page Description',
+          copyBtn: '📋 Copy Post Description',
+          copiedToast: 'Facebook post description copied!',
+          text: `🧮✨ Interactive game « Common Multiples Adventure » for 6th-grade primary students preparing for Pilot Middle School entrance exams!\n\n🎯 Features:\n• 4 progressive levels: Multiple Hunter & Bounding, Interactive Intersection Board & Skip-Counter, Word Problems with Reasoning, and Pilot Boss (3 numbers).\n• 4 modes: Learning, Challenge, 2-Team Classroom, and Daily Challenge.\n• AR / FR / EN support + Smartboard Mode.\n• Downloadable PNG certificate to share in the comments!\n\n👇 Play now and post your score in the comments:\n${FB_PAGE_URL}`
+        },
         levels: [
           { id: 1, name: 'Level 1: Multiple Hunter & Range Bounding' },
           { id: 2, name: 'Level 2: Interactive Board & Skip-Counter' },
@@ -1144,7 +1165,7 @@
         footer: 'السنة السادسة نحو النموذجي • Prof. Mejdi Chebbi',
         footerFb: 'Follow our official Facebook page: السنة السادسة نحو النموذجي',
         toastCopied: 'Share caption copied! Open our Facebook page and paste your score with your certificate in the comments.',
-        toastLogoUpdated: 'Logo updated successfully! / تم تحديث الشعار بنجاح!',
+        toastLogoUpdated: 'Logo updated successfully! / تم تحديث الشعار بنجاح !',
         toastLogoReset: 'Default crest logo restored!',
         toastUrlError: 'Could not load image from that URL. Try pasting the image directly (Ctrl+V) or picking a file.',
         toastSelectOne: 'Please select at least one number first!',
@@ -1240,7 +1261,6 @@
 
     function generateLevel1Question(rng, variant = 0) {
       if (variant === 0) {
-        // Upper-bound multi-select including 0
         const base = pickRandom([3, 4, 5, 6, 7, 8, 9], rng);
         const upper = base * pickRandom([5, 6, 7], rng) + Math.floor(rng() * (base - 1)) + 1;
         const correctAnswers = getMultiplesInRange(base, 0, upper, true);
@@ -1275,7 +1295,6 @@
           }
         };
       } else {
-        // Bounded range [minR, maxR]
         const base = pickRandom([6, 7, 8, 9], rng);
         const startMult = pickRandom([4, 5, 6], rng);
         const minR = base * startMult - Math.floor(rng() * (base - 2)) - 1;
@@ -1328,7 +1347,6 @@
       const gridMax = Math.min(60, Math.max(36, common * 2 + 6));
 
       if (variant === 0) {
-        // Ask for non-zero LCM / PPCM
         const distractors = new Set([common]);
         [0, numA + numB, numA * numB === common ? common * 2 : numA * numB, common + numA, Math.max(2, common - numB)].forEach(
           (cand) => {
@@ -1363,7 +1381,6 @@
           }
         };
       } else {
-        // Ask for common multiples in a range
         const maxR = gridMax;
         const minR = 1;
         const correctAnswers = getMultiplesInRange(common, minR, maxR, false);
@@ -1652,7 +1669,6 @@
       if (selectedLevel === 4) {
         return [generateLevel4Question(rng, 0), generateLevel4Question(rng, 1), generateLevel4Question(rng, 2)];
       }
-      // Full Adventure or Daily Challenge (balanced progression)
       return [
         generateLevel1Question(rng, 0),
         generateLevel1Question(rng, 1),
@@ -1674,13 +1690,12 @@
       state: {
         lang: 'ar',
         smartboard: false,
-        screen: 'home', // 'home' | 'game' | 'end'
+        screen: 'home',
         studentName: '',
         selectedMode: 'learn',
         customLogoDataUrl: null,
         teacherSignature: 'الأستاذ مجدي الشابي',
 
-        // Game Session State
         questions: [],
         qIndex: 0,
         score: 0,
@@ -1692,10 +1707,8 @@
         currentTeam: 'A',
         history: [],
 
-        // Owner Admin Unlock State (Session-Only)
         adminUnlocked: false,
 
-        // Active Question Interaction State
         selectedChoices: [],
         answered: false,
         isCorrect: false,
@@ -1708,7 +1721,6 @@
         whySelectedIdx: null,
         stealActive: false,
 
-        // Teacher Custom Builder State
         showTeacherBuilder: false,
         teacherCustom: {
           numA: 8,
@@ -1718,7 +1730,6 @@
           maxR: 200
         },
 
-        // Level 2 Board State
         highlightA: false,
         highlightB: false,
         scratchCounts: [1, 1]
@@ -1736,12 +1747,10 @@
           if (savedSig) this.state.teacherSignature = savedSig;
         } catch (e) {}
 
-        // Auto-detect ./logo.png or ./logo.jpg when hosted on GitHub Pages
         if (!this.state.customLogoDataUrl) {
           this.probeRepoLogoFiles(0);
         }
 
-        // Open Owner Modal automatically if URL contains ?admin=1
         try {
           const params = new URLSearchParams(window.location.search);
           if (params.get('admin') === '1') {
@@ -1749,14 +1758,12 @@
           }
         } catch (e) {}
 
-        // Detect Facebook In-App WebView
         const ua = navigator.userAgent || '';
         if (/FBAN|FBAV|Instagram/i.test(ua)) {
           const fbBanner = document.getElementById('fb-webview-banner');
           if (fbBanner) fbBanner.classList.remove('hidden');
         }
 
-        // Clipboard Paste Support for Owner Logo Modal (only when unlocked)
         window.addEventListener('paste', (e) => {
           const modal = document.getElementById('logo-modal');
           if (!modal || modal.classList.contains('hidden') || !this.state.adminUnlocked) return;
@@ -2166,7 +2173,6 @@
         const common = c !== null ? lcm3(a, b, c) : lcm(a, b);
         const correctAnswers = getMultiplesInRange(common, minR, maxR, minR === 0);
 
-        // Ensure at least one valid multiple exists in range
         const effectiveMax = correctAnswers.length > 0 ? maxR : Math.max(maxR, common * 2);
         const finalAnswers =
           correctAnswers.length > 0
@@ -2298,12 +2304,10 @@
         const nm = I18N[lang].nearMiss;
         if (!chosenArr || chosenArr.length === 0) return null;
 
-        // 1. Picked 0 when non-zero was asked
         if (q.type === 'single-choice' && chosenArr[0] === 0 && q.correctAnswer > 0) {
           return nm.pickedZero;
         }
 
-        // 2. Forgot remainder on Level 3 remainder word problem
         if (
           q.type === 'single-choice' &&
           q.metaRemainder > 0 &&
@@ -2315,7 +2319,6 @@
             .replace('{expected}', q.correctAnswer);
         }
 
-        // 3. Picked a common divisor instead of a common multiple
         const nums = q.tripleNums || q.metaNums || (q.numA && q.numB ? [q.numA, q.numB] : null);
         if (q.type === 'single-choice' && nums && chosenArr[0] > 0) {
           const val = chosenArr[0];
@@ -2350,7 +2353,6 @@
           }
         }
 
-        // 2-Team Steal Turn Mechanic when active team misses
         if (
           !isCorrect &&
           !isTimeout &&
@@ -2440,6 +2442,215 @@
         if (which === 'div') this.state.showDivHint = !this.state.showDivHint;
         if (which === 'step') this.state.showStepHint = !this.state.showStepHint;
         this.render();
+      },
+
+      renderGameScreen() {
+        const lang = this.state.lang;
+        const t = I18N[lang];
+        const te = t.teamEnhancements;
+        const q = this.state.questions[this.state.qIndex];
+        if (!q) return this.renderHomeScreen();
+
+        const levelObj = t.levels.find((l) => l.id === q.level) || t.levels[0];
+        const isLastQ =
+          this.state.qIndex + 1 >= this.state.questions.length ||
+          (this.state.selectedMode === 'challenge' && this.state.hearts <= 0);
+        const activeTeamName = this.state.currentTeam === 'A' ? t.teamA : t.teamB;
+
+        return `
+          <div class="space-y-4 animate-pop">
+            <!-- Top Game Status Bar -->
+            <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onclick="app.goHome()"
+                  class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1B2A4A] font-extrabold text-xs transition-colors"
+                >
+                  🏠 ${t.homeBtn}
+                </button>
+                <span class="px-3 py-1 rounded-xl bg-rose-50 text-[#C8102E] border border-[#C8102E]/20 font-black text-xs sm:text-sm">
+                  ${t.qProgress} ${this.state.qIndex + 1} / ${this.state.questions.length}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2 flex-wrap">
+                ${
+                  this.state.selectedMode === 'challenge'
+                    ? `<span class="px-2.5 py-1 rounded-xl bg-rose-50 text-[#C8102E] font-black text-xs sm:text-sm">
+                        ${'❤️'.repeat(this.state.hearts)}${'🖤'.repeat(Math.max(0, 3 - this.state.hearts))}
+                      </span>
+                      <span id="challenge-timer" class="px-3 py-1 rounded-xl bg-amber-100 text-amber-950 font-black text-xs sm:text-sm">
+                        ⏱️ ${this.state.timeLeft}s
+                      </span>`
+                    : ''
+                }
+
+                ${
+                  this.state.selectedMode === 'team'
+                    ? `<span class="px-2.5 py-1 rounded-xl font-black text-xs sm:text-sm ${
+                        this.state.currentTeam === 'A'
+                          ? 'bg-sky-600 text-white ring-2 ring-sky-300'
+                          : 'bg-sky-100 text-sky-900'
+                      }">
+                        ${t.teamA}: ${this.state.teamScores.A}
+                      </span>
+                      <span class="px-2.5 py-1 rounded-xl font-black text-xs sm:text-sm ${
+                        this.state.currentTeam === 'B'
+                          ? 'bg-amber-500 text-slate-950 ring-2 ring-amber-300'
+                          : 'bg-amber-100 text-amber-900'
+                      }">
+                        ${t.teamB}: ${this.state.teamScores.B}
+                      </span>`
+                    : `<span class="px-3 py-1 rounded-xl bg-[#1B2A4A] text-white font-black text-xs sm:text-sm">
+                        ⭐ ${t.scoreLabel} ${this.state.score}
+                      </span>`
+                }
+              </div>
+            </div>
+
+            <!-- Team Mode Active Turn / Steal Banner -->
+            ${
+              this.state.selectedMode === 'team'
+                ? this.state.stealActive
+                  ? `<div class="p-3 rounded-2xl bg-amber-100 border-2 border-amber-500 text-amber-950 font-black text-xs sm:text-sm text-center animate-pop">
+                      ${te.stealBanner.replace('{team}', activeTeamName)}
+                    </div>`
+                  : `<div class="p-2.5 rounded-2xl bg-sky-50 border border-sky-200 text-[#1B2A4A] font-black text-xs sm:text-sm text-center">
+                      🎯 ${t.turnOf} <span class="text-[#C8102E]">${activeTeamName}</span>
+                    </div>`
+                : ''
+            }
+
+            <!-- Main Question Card -->
+            <section class="bg-white rounded-3xl p-4 sm:p-6 shadow-md border-2 border-[#C8102E]/20 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[#1B2A4A] font-extrabold text-xs">
+                  <span>${q.icon}</span>
+                  <span>${levelObj.name}</span>
+                </span>
+              </div>
+
+              <!-- Question Prompt -->
+              <h2 class="text-base sm:text-xl font-black text-[#1B2A4A] leading-relaxed">
+                ${applyMathBridge(q.prompt[lang], lang)}
+              </h2>
+
+              <!-- Interactive Board (Level 2) or Triple Skip-Counter (Level 4) -->
+              ${q.level === 2 && q.numA && q.numB ? this.renderLevel2Board(q) : ''}
+              ${q.tripleNums ? this.renderTripleSkipCounter(q.tripleNums) : ''}
+
+              <!-- Fast PPCM/LCM Multiplier Ladder (Levels 2 & 4) -->
+              ${(q.level === 2 || q.level === 4) && (q.numA || q.tripleNums) ? this.renderPpcmLadder(q) : ''}
+
+              <!-- Helper Hint Buttons -->
+              <div class="flex flex-wrap gap-2">
+                ${
+                  q.divHint
+                    ? `<button
+                        type="button"
+                        onclick="app.toggleHint('div')"
+                        class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 font-extrabold text-xs sm:text-sm transition-colors"
+                      >
+                        ${t.divHintBtn}
+                      </button>`
+                    : ''
+                }
+                ${
+                  q.stepHint
+                    ? `<button
+                        type="button"
+                        onclick="app.toggleHint('step')"
+                        class="px-3.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-950 border border-sky-300 font-extrabold text-xs sm:text-sm transition-colors"
+                      >
+                        ${t.stepHintBtn}
+                      </button>`
+                    : ''
+                }
+              </div>
+
+              ${
+                this.state.showDivHint && q.divHint
+                  ? `<div class="p-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm animate-pop">
+                      ${applyMathBridge(q.divHint[lang], lang)}
+                    </div>`
+                  : ''
+              }
+
+              ${
+                this.state.showStepHint && q.stepHint
+                  ? `<div class="p-3 rounded-2xl bg-sky-50 border border-sky-300 text-sky-950 font-bold text-xs sm:text-sm animate-pop">
+                      ${applyMathBridge(q.stepHint[lang], lang)}
+                    </div>`
+                  : ''
+              }
+
+              <!-- Answer Choices -->
+              ${this.renderQuestionChoices(q)}
+
+              <!-- Feedback Banner after Submitting -->
+              ${
+                this.state.answered
+                  ? `<div class="p-4 rounded-2xl border-2 space-y-2 animate-pop ${
+                      this.state.isCorrect
+                        ? 'bg-emerald-50 border-emerald-400 text-emerald-950'
+                        : 'bg-rose-50 border-rose-400 text-rose-950'
+                    }">
+                      <div class="font-black text-sm sm:text-base">
+                        ${
+                          this.state.isCorrect
+                            ? '🎉 ' + t.correctFeedback
+                            : this.state.selectedChoices.length === 0
+                            ? '⏰ ' + t.timeUpFeedback
+                            : '💡 ' + t.wrongFeedback
+                        }
+                      </div>
+                      ${
+                        this.state.nearMissNote
+                          ? `<div class="p-2.5 rounded-xl bg-amber-100/90 border border-amber-400 text-amber-950 font-extrabold text-xs sm:text-sm">
+                              🔍 ${applyMathBridge(this.state.nearMissNote, lang)}
+                            </div>`
+                          : ''
+                      }
+                      <p class="text-xs sm:text-sm font-bold leading-relaxed">
+                        ${applyMathBridge(q.explanation[lang], lang)}
+                      </p>
+                    </div>`
+                  : ''
+              }
+
+              <!-- Level 3 Anti-Guessing "Why?" Reasoning Check -->
+              ${
+                this.state.answered && this.state.isCorrect && q.whyQuestion
+                  ? this.renderWhyCheck(q.whyQuestion)
+                  : ''
+              }
+
+              <!-- Primary Action Button: Submit or Next -->
+              <div class="pt-1">
+                ${
+                  !this.state.answered
+                    ? `<button
+                        type="button"
+                        onclick="app.submitAnswer(false)"
+                        class="btn-tactile w-full py-3.5 px-6 rounded-2xl bg-[#C8102E] hover:bg-[#9F0D24] text-white font-black text-base sm:text-lg shadow-md"
+                      >
+                        ${t.submitBtn}
+                      </button>`
+                    : !this.state.awaitingWhy
+                    ? `<button
+                        type="button"
+                        onclick="app.nextQuestion()"
+                        class="btn-tactile w-full py-3.5 px-6 rounded-2xl bg-[#1B2A4A] hover:bg-slate-800 text-white font-black text-base sm:text-lg shadow-md"
+                      >
+                        ${isLastQ ? t.finishBtn : t.nextBtn}
+                      </button>`
+                    : ''
+                }
+              </div>
+            </section>
+          </div>
+        `;
       },
 
       renderLevel2Board(q) {
@@ -2616,11 +2827,9 @@
         canvas.height = 780;
         const ctx = canvas.getContext('2d');
 
-        // Background Cream
         ctx.fillStyle = '#FFFDF9';
         ctx.fillRect(0, 0, 1200, 780);
 
-        // Double Decorative Border
         ctx.strokeStyle = '#C8102E';
         ctx.lineWidth = 14;
         ctx.strokeRect(24, 24, 1152, 732);
@@ -2629,7 +2838,6 @@
         ctx.lineWidth = 4;
         ctx.strokeRect(46, 46, 1108, 688);
 
-        // Top Crimson Ribbon Header
         ctx.fillStyle = '#1B2A4A';
         ctx.fillRect(70, 70, 1060, 64);
         ctx.fillStyle = '#FFFFFF';
@@ -2637,17 +2845,14 @@
         ctx.textAlign = 'center';
         ctx.fillText('السنة السادسة نحو النموذجي  •  ' + I18N[lang].appTitle, 600, 111);
 
-        // Certificate Main Title
         ctx.fillStyle = '#C8102E';
         ctx.font = '900 46px Cairo, Nunito, sans-serif';
         ctx.fillText('🏆 ' + t.certTitle + ' 🏆', 600, 330);
 
-        // Subtitle
         ctx.fillStyle = '#334155';
         ctx.font = '700 22px Cairo, Nunito, sans-serif';
         ctx.fillText(t.certSubtitle, 600, 378);
 
-        // Student Name Banner
         ctx.fillStyle = '#FFF1F2';
         ctx.fillRect(220, 405, 760, 78);
         ctx.strokeStyle = '#C8102E';
@@ -2658,23 +2863,19 @@
         ctx.font = '900 40px Cairo, Nunito, sans-serif';
         ctx.fillText(studentName, 600, 457);
 
-        // Stats Row
         ctx.fillStyle = '#0F172A';
         ctx.font = '800 24px Cairo, Nunito, sans-serif';
         const statsLine = `${t.modeLabel} ${modeTitle}   |   ${t.scoreLabel} ${this.state.score}   |   ${t.accuracyLabel} ${accuracy}%`;
         ctx.fillText(statsLine, 600, 540);
 
-        // Date & Teacher Signature
         ctx.fillStyle = '#475569';
         ctx.font = '700 20px Cairo, Nunito, sans-serif';
         ctx.fillText(`${t.dateLabel} ${dateStr}   •   ${this.state.teacherSignature}`, 600, 610);
 
-        // Facebook Page Footer on Certificate
         ctx.fillStyle = '#0284C7';
         ctx.font = '800 19px Nunito, Cairo, sans-serif';
         ctx.fillText('📘 ' + FB_PAGE_SHORT_URL, 600, 668);
 
-        // Draw Circular Emblem at Top Center (y = 215)
         const logoSrc = this.state.customLogoDataUrl || getDefaultCrestDataUrl();
         const img = new Image();
         img.crossOrigin = 'anonymous';
@@ -2753,6 +2954,22 @@
         } catch (e) {}
         document.body.removeChild(ta);
         this.showToast(I18N[lang].toastCopied);
+      },
+
+      copyFacebookPostDescription() {
+        SoundFX.pop();
+        const fbBox = I18N[this.state.lang].fbPostBox;
+        const ta = document.createElement('textarea');
+        ta.value = fbBox.text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+        } catch (e) {}
+        document.body.removeChild(ta);
+        this.showToast(fbBox.copiedToast);
       },
 
       render() {
@@ -2947,198 +3164,20 @@
                   : ''
               }
             </section>
-          </div>
-        `;
-      },
 
-      renderGameScreen() {
-        const lang = this.state.lang;
-        const t = I18N[lang];
-        const q = this.state.questions[this.state.qIndex];
-        if (!q) return '';
-
-        const totalQ = this.state.questions.length;
-        const progressPct = Math.round(((this.state.qIndex + 1) / totalQ) * 100);
-        const levelInfo = t.levels.find((l) => l.id === q.level) || t.levels[0];
-        const isLast = this.state.qIndex + 1 >= totalQ || (this.state.selectedMode === 'challenge' && this.state.hearts <= 0);
-
-        return `
-          <div class="space-y-4 animate-pop">
-            <!-- Top HUD Bar -->
-            <section class="bg-white rounded-3xl p-3.5 sm:p-4 shadow-sm border border-slate-200 space-y-2.5">
+            <!-- Ready-to-Use Facebook Post Description Box -->
+            <section class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-slate-200/80 space-y-3 smartboard-hide">
               <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="text-sm sm:text-base font-black text-[#1B2A4A]">${t.fbPostBox.title}</h3>
                 <button
                   type="button"
-                  onclick="app.goHome()"
-                  class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1B2A4A] font-extrabold text-xs sm:text-sm"
+                  onclick="app.copyFacebookPostDescription()"
+                  class="btn-tactile px-4 py-2 rounded-xl bg-[#1877F2] hover:bg-blue-700 text-white font-black text-xs sm:text-sm shadow-sm"
                 >
-                  🏠 ${t.homeBtn}
+                  ${t.fbPostBox.copyBtn}
                 </button>
-
-                <span class="px-3 py-1 rounded-full bg-rose-50 text-[#C8102E] border border-[#C8102E]/25 font-black text-xs sm:text-sm">
-                  ${levelInfo.name}
-                </span>
-
-                <div class="flex items-center gap-2 font-black text-xs sm:text-sm">
-                  ${
-                    this.state.selectedMode === 'challenge'
-                      ? `<span class="px-2.5 py-1 rounded-xl bg-rose-50 text-[#C8102E] border border-rose-200">${'❤️'.repeat(this.state.hearts)}${'🤍'.repeat(3 - this.state.hearts)}</span>
-                         <span id="challenge-timer" class="px-2.5 py-1 rounded-xl bg-amber-100 text-amber-950 font-black">⏱️ ${this.state.timeLeft}s</span>`
-                      : ''
-                  }
-                  ${
-                    this.state.selectedMode === 'team'
-                      ? `<span class="px-2.5 py-1 rounded-xl bg-blue-100 text-blue-950">${t.teamA}: ${this.state.teamScores.A}</span>
-                         <span class="px-2.5 py-1 rounded-xl bg-teal-100 text-teal-950">${t.teamB}: ${this.state.teamScores.B}</span>`
-                      : `<span class="px-3 py-1 rounded-xl bg-[#1B2A4A] text-white">${t.scoreLabel} ${this.state.score}</span>`
-                  }
-                </div>
               </div>
-
-              ${
-                this.state.selectedMode === 'team'
-                  ? `<div class="text-center py-1.5 px-3 rounded-xl font-black text-sm transition-all ${
-                      this.state.stealActive
-                        ? 'bg-amber-400 text-slate-950 ring-2 ring-[#C8102E] animate-pulse'
-                        : this.state.currentTeam === 'A'
-                        ? 'bg-blue-100 text-blue-950'
-                        : 'bg-teal-100 text-teal-950'
-                    }">
-                      ${
-                        this.state.stealActive
-                          ? t.teamEnhancements.stealBanner.replace(
-                              '{team}',
-                              this.state.currentTeam === 'A' ? t.teamA : t.teamB
-                            )
-                          : `🎯 ${t.turnOf} ${this.state.currentTeam === 'A' ? t.teamA : t.teamB}`
-                      }
-                    </div>`
-                  : ''
-              }
-
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-black text-slate-600 whitespace-nowrap">${t.qProgress} ${this.state.qIndex + 1}/${totalQ}</span>
-                <div class="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-[#C8102E] to-[#0284C7] transition-all duration-300" style="width: ${progressPct}%"></div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Main Question Card -->
-            <section class="bg-white rounded-3xl p-4 sm:p-6 shadow-md border-2 border-slate-200/80 space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-3xl sm:text-4xl flex-shrink-0">${q.icon || '🔢'}</span>
-                <h2 class="text-base sm:text-xl font-black text-[#1B2A4A] leading-relaxed">
-                  ${applyMathBridge(q.prompt[lang], lang)}
-                </h2>
-              </div>
-
-              <!-- Optional Pedagogical Hint Toggles -->
-              <div class="flex flex-wrap gap-2">
-                ${
-                  q.divHint
-                    ? `<button type="button" onclick="app.toggleHint('div')" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 font-extrabold text-xs sm:text-sm">
-                        ${t.divHintBtn}
-                      </button>`
-                    : ''
-                }
-                ${
-                  q.stepHint
-                    ? `<button type="button" onclick="app.toggleHint('step')" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-950 border border-sky-300 font-extrabold text-xs sm:text-sm">
-                        ${t.stepHintBtn}
-                      </button>`
-                    : ''
-                }
-              </div>
-
-              ${
-                this.state.showDivHint && q.divHint
-                  ? `<div class="p-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm font-bold animate-pop">
-                      ${applyMathBridge(q.divHint[lang], lang)}
-                    </div>`
-                  : ''
-              }
-
-              ${
-                this.state.showStepHint && q.stepHint
-                  ? `<div class="p-3 rounded-2xl bg-sky-50 border border-sky-300 text-sky-950 text-xs sm:text-sm font-bold animate-pop">
-                      ${applyMathBridge(q.stepHint[lang], lang)}
-                    </div>`
-                  : ''
-              }
-
-              <!-- Level 2 Interactive Intersection Board & Skip-Counter -->
-              ${q.level === 2 ? this.renderLevel2Board(q) : ''}
-
-              <!-- Level 4 3-Number Skip-Counter Helper -->
-              ${q.level === 4 && q.tripleNums ? this.renderTripleSkipCounter(q.tripleNums) : ''}
-
-              <!-- Interactive Step-by-Step PPCM/LCM Multiplier Ladder (Levels 2 & 4) -->
-              ${q.level === 2 || q.level === 4 ? this.renderPpcmLadder(q) : ''}
-
-              <!-- Answer Choices Grid -->
-              ${this.renderQuestionChoices(q)}
-
-              <!-- Anti-Guessing "Why?" Check on Level 3 Word Problems -->
-              ${
-                this.state.answered && this.state.isCorrect && q.whyQuestion
-                  ? this.renderWhyCheck(q.whyQuestion)
-                  : ''
-              }
-
-              <!-- Feedback & Detailed Solution after Answering -->
-              ${
-                this.state.answered
-                  ? `<div class="p-4 rounded-2xl border-2 animate-pop space-y-2 ${
-                      this.state.isCorrect
-                        ? 'bg-emerald-50 border-emerald-400 text-emerald-950'
-                        : 'bg-rose-50 border-rose-400 text-rose-950'
-                    }">
-                      <p class="font-black text-sm sm:text-base">
-                        ${
-                          this.state.selectedChoices.length === 0
-                            ? `⏰ ${t.timeUpFeedback}`
-                            : this.state.isCorrect
-                            ? `🎉 ${t.correctFeedback}`
-                            : `💡 ${t.wrongFeedback}`
-                        }
-                      </p>
-                      ${
-                        this.state.nearMissNote
-                          ? `<div class="p-2.5 rounded-xl bg-amber-100/90 border border-amber-400 text-amber-950 text-xs sm:text-sm font-extrabold">
-                              🎯 ${this.state.nearMissNote}
-                            </div>`
-                          : ''
-                      }
-                      <p class="text-xs sm:text-sm font-bold leading-relaxed">
-                        ${applyMathBridge(q.explanation[lang], lang)}
-                      </p>
-                    </div>`
-                  : ''
-              }
-
-              <!-- Submit or Next Action Button -->
-              <div class="pt-1">
-                ${
-                  !this.state.answered
-                    ? `<button
-                        type="button"
-                        onclick="app.submitAnswer(false)"
-                        class="btn-tactile w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#C8102E] to-[#1B2A4A] hover:opacity-95 text-white font-black text-base sm:text-lg shadow-lg"
-                      >
-                        ${t.submitBtn}
-                      </button>`
-                    : !this.state.awaitingWhy
-                    ? `<button
-                        type="button"
-                        onclick="app.nextQuestion()"
-                        class="btn-tactile w-full py-4 px-6 rounded-2xl bg-[#10B981] hover:bg-emerald-600 text-white font-black text-base sm:text-lg shadow-lg"
-                      >
-                        ${isLast ? t.finishBtn : t.nextBtn}
-                      </button>`
-                    : ''
-                }
-              </div>
+              <pre class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-bold text-slate-700 whitespace-pre-wrap leading-relaxed font-sans">${t.fbPostBox.text}</pre>
             </section>
           </div>
         `;
@@ -3231,6 +3270,7 @@
           </div>
         `;
       },
+
       togglePpcmLadder() {
         SoundFX.pop();
         this.state.showPpcmLadder = !this.state.showPpcmLadder;
